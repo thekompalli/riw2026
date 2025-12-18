@@ -141,6 +141,9 @@ const eventData = {
     ]
 };
 
+// Optimizing lookups
+const SPEAKER_MAP = new Map(eventData.speakers.map(s => [s.name, s]));
+
 const SESSION_QUOTES = {
     "Opening Ceremony": { text: "Science knows no country, because knowledge belongs to humanity, and is the torch which illuminates the world.", author: "Louis Pasteur" },
     "Keynote: Vaccine Design": { text: "Vaccines are a miracle. They have saved more lives than any other medical invention.", author: "Bill Gates" },
@@ -332,12 +335,17 @@ const Hero = () => {
     return (
         <div id="home" className="relative h-screen min-h-[850px] flex items-center overflow-hidden bg-brand-900">
             <ThreeBackground />
-            <div className="absolute inset-0 opacity-40">
+            {/* Robust Overlays for Readability */}
+            <div className="absolute inset-0 bg-gradient-to-r from-brand-950 via-brand-900/80 to-transparent z-10"></div>
+            <div className="absolute inset-0 bg-gradient-to-b from-brand-950/50 via-transparent to-brand-950 z-10"></div>
+
+            {/* Ambient Glows */}
+            <div className="absolute inset-0 opacity-30 z-0">
                 <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-brand-800 rounded-full mix-blend-screen blur-[120px] animate-pulse"></div>
                 <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-accent-600 rounded-full mix-blend-screen blur-[120px] opacity-40 animate-pulse delay-1000"></div>
                 <div className="absolute top-[40%] left-[40%] w-[30%] h-[30%] bg-gold-400 rounded-full mix-blend-screen blur-[100px] animate-pulse delay-700"></div>
             </div>
-            <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] mix-blend-overlay"></div>
+            <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] mix-blend-overlay z-0"></div>
 
             <motion.div style={{ y: y1, opacity }} className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
                 <motion.div
@@ -354,16 +362,16 @@ const Hero = () => {
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 1, ease: "easeOut" }}
-                    className="font-serif text-6xl md:text-8xl lg:text-9xl font-bold text-white tracking-tighter leading-[0.9] mb-8"
+                    className="font-serif text-6xl md:text-8xl lg:text-9xl font-bold text-white tracking-tighter leading-[0.9] mb-8 drop-shadow-2xl"
                 >
-                    Life After <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-600 via-gold-400 to-gold-500">LIVE</span>
+                    Life After <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-600 via-gold-400 to-gold-500 drop-shadow-sm">LIVE</span>
                 </motion.h1>
 
                 <motion.p
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.4 }}
-                    className="text-lg md:text-2xl text-brand-100 max-w-5xl font-light leading-relaxed mb-8"
+                    className="text-lg md:text-2xl text-brand-100 max-w-5xl font-light leading-relaxed mb-8 drop-shadow-lg"
                 >
                     {eventData.details.description}
                 </motion.p>
@@ -490,7 +498,7 @@ const About = () => {
     );
 };
 
-const DNAScheduleItem = ({ item, index, isEven, onClick }) => {
+const DNAScheduleItem = React.memo(({ item, index, isEven, onClick }) => {
     const isBreak = item.type === 'break';
     const isSpecial = item.type === 'intro' || item.type === 'panel';
     const x = useMotionValue(0);
@@ -498,19 +506,19 @@ const DNAScheduleItem = ({ item, index, isEven, onClick }) => {
     const rotateX = useTransform(y, [-100, 100], [5, -5]);
     const rotateY = useTransform(x, [-100, 100], [-5, 5]);
 
-    // Find speaker image if speaker exists
+    // O(1) Lookup
     let speakerImage = null;
     if (item.speaker) {
-        const foundSpeaker = eventData.speakers.find(s => s.name === item.speaker);
+        const foundSpeaker = SPEAKER_MAP.get(item.speaker);
         if (foundSpeaker) speakerImage = foundSpeaker.image;
     }
 
     return (
         <motion.div
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6, delay: index * 0.1 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.5, delay: (index % 8) * 0.05 }} // Much faster stagger
             className={clsx(
                 "relative flex items-center w-full gap-8 mb-8 md:mb-16",
                 "md:justify-between",
@@ -550,7 +558,7 @@ const DNAScheduleItem = ({ item, index, isEven, onClick }) => {
                     {item.speaker && (
                         <div className="flex items-center gap-3">
                             {speakerImage ? (
-                                <img src={speakerImage} alt={item.speaker} className="w-8 h-8 rounded-full object-cover shadow-sm border border-brand-100" />
+                                <img src={speakerImage} alt={item.speaker} loading="lazy" className="w-8 h-8 rounded-full object-cover shadow-sm border border-brand-100" />
                             ) : (
                                 <div className="w-8 h-8 rounded-full bg-gradient-to-br from-brand-100 to-brand-50 flex items-center justify-center text-brand-900 font-bold text-sm shadow-inner">{item.speaker.charAt(0)}</div>
                             )}
@@ -587,7 +595,7 @@ const DNAScheduleItem = ({ item, index, isEven, onClick }) => {
             </div>
         </motion.div>
     );
-};
+});
 
 const ScheduleModal = ({ item, isOpen, onClose, onOpenSpeaker }) => {
     if (!item) return null;
@@ -600,7 +608,7 @@ const ScheduleModal = ({ item, isOpen, onClose, onOpenSpeaker }) => {
     let speakerImage = null;
     let speakerDetails = null;
     if (item.speaker) {
-        speakerDetails = eventData.speakers.find(s => s.name === item.speaker);
+        speakerDetails = SPEAKER_MAP.get(item.speaker);
         if (speakerDetails) speakerImage = speakerDetails.image;
     }
 
