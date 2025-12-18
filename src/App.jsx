@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence, useMotionValue } from 'framer-motion';
-import { Calendar, MapPin, Clock, Users, ChevronRight, Mail, Menu, X, ArrowRight, Star, Linkedin } from 'lucide-react';
+import { Calendar, MapPin, Clock, Users, ChevronRight, Mail, Menu, X, ArrowRight, Star, Linkedin, MessageCircle } from 'lucide-react';
 import clsx from 'clsx';
+import { useForm, ValidationError } from '@formspree/react';
 import LocationMap from './components/LocationMap';
+import ThreeBackground from './components/ThreeBackground';
 
 // --- Data ---
 const eventData = {
@@ -43,6 +45,8 @@ const eventData = {
             role: "Vaccine Scientist",
             org: "Ludwig Institute for Cancer Research",
             email: "iyiola.oladunjoye@ludwig.ox.ac.uk",
+            linkedin: "https://www.linkedin.com/in/iyioladunjoye/",
+            image: "/Iyiola Oladunjoye.jpg",
             summary: "DPhil student at Oxford with a background in viral-vector vaccine design. Worked on ChAdOx1 nCoV-19 and Marburg virus trials.",
             fullBio: "Iyiola Oladunjoye is a DPhil student at the University of Oxford with a strong background in microbiology, vaccinology, and translational vaccine research. He completed his BSc in Microbiology at the University of Ilorin, Nigeria, gaining experience in environmental microbiology and public health, before earning the prestigious Erasmus Mundus Joint Master's Degree in Vaccinology (LIVE), training across five European institutions and receiving advanced instruction in immunology, infectiology, clinical research, and vaccine regulation. His MSc thesis at the Oxford Vaccine Group, supervised by Dr. Daniel Wright and Professor Teresa Lambe, focused on viral-vector vaccine design for outbreak pathogens and contributed to research on the ChAdOx1 nCoV-19 fourth-dose booster and anti-vector immunity. Prior to beginning his DPhil, he worked as a Research Assistant with the same group, supporting the Marburg virus Phase I clinical trial and Sudan Ebola vaccine preclinical studies, experiences that deepened his commitment to vaccine immunology and translational research."
         },
@@ -51,30 +55,38 @@ const eventData = {
             role: "Technical Account Manager",
             org: "GenScript",
             email: "josselyn.yaguananavarette@genscript.com",
+            linkedin: "https://www.linkedin.com/in/josselynayana/",
+            image: "/Josselyn Yaguana Navarrete.jpg",
             summary: "Biosciences professional specializing in molecular biology and protein science. Graduate of the LIVE Erasmus Mundus Joint Master 2024.",
-            fullBio: "Josselyn Yaguana is a biosciences professional with a strong background in molecular biology, protein science, and vaccinology, and is a graduate of the LIVE Erasmus Mundus Joint Master 2024 promotion. She conducted her master’s research at Instituto Butantan in Brazil in the Laboratory of Vaccine Development, focusing on antigen design and immunological characterization. Previously, Josselyn worked at the Institute of Biotechnology and Biomedicine (IBB-UAB). She currently works as a Technical Account Manager at GenScript, providing scientific and technical support to research teams across Spain and South Africa on academia, biotech and pharma sector."
+            fullBio: "Josselyn Yaguana is a biosciences professional with a strong background in molecular biology, protein science, and vaccinology, and is a graduate of the LIVE Erasmus Mundus Joint Master 2024 promotion. She conducted her master's research at Instituto Butantan in Brazil in the Laboratory of Vaccine Development, focusing on antigen design and immunological characterization. Previously, Josselyn worked at the Institute of Biotechnology and Biomedicine (IBB-UAB). She currently works as a Technical Account Manager at GenScript, providing scientific and technical support to research teams across Spain and South Africa on academia, biotech and pharma sector."
         },
         {
             name: "Sodiq Ayobami Hameed",
             role: "Marie Curie Doctoral Fellow",
             org: "University College Dublin",
             email: "sodiq.hameed@ucdconnect.ie",
+            linkedin: "https://www.linkedin.com/in/sodiq-ayobami-hameed-7ba654192/",
+            image: "/Sodiq Ayobami Hameed.jpg",
             summary: "Translational research scientist focusing on cancer genomics and precision medicine. Visiting Researcher at UC Santa Barbara.",
-            fullBio: "Sodiq Ayobami Hameed is a translational research scientist with a strong background in vaccinology, immunology, and cancer genomics, and is currently pursuing his PhD at University College Dublin and the University of Galway, where he focuses on precision medicine at the intersection of immunology, genomics, and bioinformatics to better understand and combat cancer. A graduate of the Erasmus Mundus LIVE Master’s programme, he trained across leading European institutions, Barcelona, Antwerp, Lyon, and Saint-Étienne, gaining expertise in advanced immunology, molecular biology, vaccine R&D, and project management. His research experience spans both academia and industry, including a research internship at Boehringer Ingelheim and his current role as a Visiting Researcher at the University of California, Santa Barbara. Sodiq has contributed to peer-reviewed publications in immunology and vaccinology, and his earlier training as a Doctor of Veterinary Medicine at Usmanu Danfodiyo University earned him multiple awards for outstanding academic performance. His work reflects a deep commitment to improving global health through innovative research in infectious diseases and cancer."
+            fullBio: "Sodiq Ayobami Hameed is a translational research scientist with a strong background in vaccinology, immunology, and cancer genomics, and is currently pursuing his PhD at University College Dublin and the University of Galway, where he focuses on precision medicine at the intersection of immunology, genomics, and bioinformatics to better understand and combat cancer. A graduate of the Erasmus Mundus LIVE Master's programme, he trained across leading European institutions, Barcelona, Antwerp, Lyon, and Saint-Étienne, gaining expertise in advanced immunology, molecular biology, vaccine R&D, and project management. His research experience spans both academia and industry, including a research internship at Boehringer Ingelheim and his current role as a Visiting Researcher at the University of California, Santa Barbara. Sodiq has contributed to peer-reviewed publications in immunology and vaccinology, and his earlier training as a Doctor of Veterinary Medicine at Usmanu Danfodiyo University earned him multiple awards for outstanding academic performance. His work reflects a deep commitment to improving global health through innovative research in infectious diseases and cancer."
         },
         {
             name: "Dr. Christel Pao",
             role: "Senior Pathologist",
             org: "Sanofi Translational Medicine",
             email: "christel_pao@yahoo.com",
+            linkedin: "https://www.linkedin.com/in/christel-pao/",
+            image: "/Dr. Christel Pao.jpg",
             summary: "M.D., MSc providing pathological interpretation for drug development. Former Chief Resident of Pathology at De La Salle University.",
-            fullBio: "Dr. Christel Pao, M.D., MSc, is a Senior Principal Scientist I and Senior Medical Pathologist at Sanofi’s Translational Medicine Unit, where she provides expert pathological interpretation to support drug development, leads biomarker analyses, and collaborates across scientific teams on tissue evaluation and immunohistochemistry validation. Her career spans clinical practice, academia, and industry, including serving as Chief Resident of Pathology & Laboratory Medicine at De La Salle University Medical Center in the Philippines, teaching and mentoring medical students, and contributing to global vaccine R&D through an internship with External Scientific Affairs at Sanofi Pasteur. She holds an MSc in Leading International Vaccinology Education (EMJM LIVE), specialized training in pathology and laboratory medicine, a medical degree from De La Salle Health Sciences Institute, and a BSc in Human Biology, earning multiple academic honors throughout her education."
+            fullBio: "Dr. Christel Pao, M.D., MSc, is a Senior Principal Scientist I and Senior Medical Pathologist at Sanofi's Translational Medicine Unit, where she provides expert pathological interpretation to support drug development, leads biomarker analyses, and collaborates across scientific teams on tissue evaluation and immunohistochemistry validation. Her career spans clinical practice, academia, and industry, including serving as Chief Resident of Pathology & Laboratory Medicine at De La Salle University Medical Center in the Philippines, teaching and mentoring medical students, and contributing to global vaccine R&D through an internship with External Scientific Affairs at Sanofi Pasteur. She holds an MSc in Leading International Vaccinology Education (EMJM LIVE), specialized training in pathology and laboratory medicine, a medical degree from De La Salle Health Sciences Institute, and a BSc in Human Biology, earning multiple academic honors throughout her education."
         },
         {
             name: "Cinthia Violeta Hernández Puente",
             role: "PhD Candidate",
             org: "Institut des Neurosciences Paris-Saclay",
             email: "violeta.hp@outlook.com",
+            linkedin: "https://www.linkedin.com/in/lbg-violeta-hp/",
+            image: "/Cinthia Violeta Hernández Puente.png",
             summary: "Neuroscientist investigating redox signaling in neural stem cells. Seeking new research or industry opportunities starting Jan 2026.",
             fullBio: "Cinthia Violeta Hernández Puente is a neuroscientist with expertise in redox biology, developmental neurobiology, and regenerative medicine. She is currently completing her PhD at the Institut des Neurosciences Paris-Saclay (2022–2026), where she investigates NOX-regulated redox signaling in neural stem cell maintenance during retinal regeneration in Xenopus. She previously worked across diverse research areas including cancer biology, gene editing, immunology, and epigenetics, and has contributed to clinical research projects in oncology, cardiology, and COVID-19. Cinthia also brings experience in data engineering and university teaching, and has presented her work at multiple international conferences. She will be seeking new research or industry opportunities starting January 2026."
         },
@@ -83,22 +95,28 @@ const eventData = {
             role: "Unit Head RNA Science Automation",
             org: "Sanofi mRNA Center of Excellence",
             email: "sergio.linares-fernandez@sanofi.com",
+            linkedin: "https://www.linkedin.com/in/sergiolin/",
+            image: "/Sergio Linares Fernandez.jpg",
             summary: "Leads automation for mRNA technology development. PhD in mRNA Vaccines against HIV from CNRS.",
-            fullBio: "Sergio Linares Fernandez currently serves as Unit Head for RNA Science Automation at Sanofi, where he leads cutting-edge initiatives in mRNA technology development. A Spanish national working in France, Sergio brings a rich international background to his leadership role. Sergio earned a bachelor’s degree in biotechnology from the University of Cadiz, Spain, which included international exchange experiences in Santiago de Chile and Prague. He continued his education through the LIVE Master’s program (1st Jenner promotion, 2018) and completed a PhD in mRNA Vaccines against HIV at CNRS, France (2021). His training also includes coursework in vaccinology at Institut Pasteur. Sergio joined Sanofi around the time of the mRNA Center of Excellence establishment (2021), where he was tasked with building the RNA Drug substance Automation Unit. In this role, he has been responsible for team recruitment, equipment selection, and execution, as well as participating in external technology evaluations and collaborations. Currently, Sergio manages the Automation Unit for RNA Science and leads an operational team that evaluates new technologies in collaboration with CMC. His responsibilities include overseeing automation initiatives across the mRNA Center of Excellence’s sites, including locations in Waltham, Marcy L’Étoile, and Orlando. Throughout his time at Sanofi, he has participated in leadership roles across different operational teams in the research division."
+            fullBio: "Sergio Linares Fernandez currently serves as Unit Head for RNA Science Automation at Sanofi, where he leads cutting-edge initiatives in mRNA technology development. A Spanish national working in France, Sergio brings a rich international background to his leadership role. Sergio earned a bachelor's degree in biotechnology from the University of Cadiz, Spain, which included international exchange experiences in Santiago de Chile and Prague. He continued his education through the LIVE Master's program (1st Jenner promotion, 2018) and completed a PhD in mRNA Vaccines against HIV at CNRS, France (2021). His training also includes coursework in vaccinology at Institut Pasteur. Sergio joined Sanofi around the time of the mRNA Center of Excellence establishment (2021), where he was tasked with building the RNA Drug substance Automation Unit. In this role, he has been responsible for team recruitment, equipment selection, and execution, as well as participating in external technology evaluations and collaborations. Currently, Sergio manages the Automation Unit for RNA Science and leads an operational team that evaluates new technologies in collaboration with CMC. His responsibilities include overseeing automation initiatives across the mRNA Center of Excellence's sites, including locations in Waltham, Marcy L'Étoile, and Orlando. Throughout his time at Sanofi, he has participated in leadership roles across different operational teams in the research division."
         },
         {
             name: "Florian Gegenfurtner",
             role: "PhD Candidate Vaccinology",
             org: "Karolinska Institutet Stockholm",
             email: "florian.gegenfurtner@ki.se",
+            linkedin: "https://www.linkedin.com/in/florian-gegenfurtner/",
+            image: "/Florian Gegenfurtner.jpg",
             summary: "Biochemist focusing on immunology and virus-host interactions (RSV, hMPV). Extensive research experience at TUM and University of Antwerp.",
-            fullBio: "Florian Gegenfurtner is a biochemist and vaccinology researcher currently pursuing his PhD at Karolinska Institutet, focusing on immunology and virus-host interactions. He completed his bachelor’s and master’s degrees in Biochemistry at the Technical University of Munich, specializing in clinical chemistry and virology, and later joined the Erasmus Mundus LIVE Master’s programme, where he trained across leading European institutions in immunology, infectiology, and vaccine science. During his master’s research at Karolinska Institutet, he investigated cross-neutralizing antibodies against RSV and hMPV, combining cell culture, ELISA, and computational analyses. Florian has accumulated extensive research experience through multiple internships and assistant positions, including work at TUM’s Institute of Virology, the Bavarian NMR Center, Klinikum rechts der Isar, and the University of Antwerp, contributing to projects involving SARS-CoV-2 variant detection, HBV protein interactions, and cytokine responses in respiratory infections."
+            fullBio: "Florian Gegenfurtner is a biochemist and vaccinology researcher currently pursuing his PhD at Karolinska Institutet, focusing on immunology and virus-host interactions. He completed his bachelor's and master's degrees in Biochemistry at the Technical University of Munich, specializing in clinical chemistry and virology, and later joined the Erasmus Mundus LIVE Master's programme, where he trained across leading European institutions in immunology, infectiology, and vaccine science. During his master's research at Karolinska Institutet, he investigated cross-neutralizing antibodies against RSV and hMPV, combining cell culture, ELISA, and computational analyses. Florian has accumulated extensive research experience through multiple internships and assistant positions, including work at TUM's Institute of Virology, the Bavarian NMR Center, Klinikum rechts der Isar, and the University of Antwerp, contributing to projects involving SARS-CoV-2 variant detection, HBV protein interactions, and cytokine responses in respiratory infections."
         },
         {
             name: "Leonie Mayer",
             role: "Postdoctoral Researcher",
             org: "UMC Hamburg-Eppendorf (IIRVD)",
             email: "l.mayer@uke.de",
+            linkedin: "https://www.linkedin.com/in/leonie-mayer/",
+            image: "/Leonie Mayer.jpg",
             summary: "Working on MVA-based vaccines against MERS. Investigated antibody responses to Malaria and COVID-19.",
             fullBio: "Leonie Mayer is a postdoctoral researcher at the Institute for Infection Research and Vaccine Development (IIRVD) of the University Medical Center Hamburg-Eppendorf in Germany. She studied Microbiology at the Maastricht University in the Netherlands and conducted research on biofilm evolution at the Institute Pasteur in Paris, France. She then joined the Montagu Promotion of the LIVE Master and completed her thesis at the Institute for Global Health in Barcelona, Spain, where she investigated antibody responses to Malaria vaccination. Returning to Germany in 2020, she pursued her PhD under the supervision of Prof. Addo at the IIRVD, analyzing the human immune responses to COVID-19 vaccination. After completing her PhD, she continued as a postdoctoral researcher at the institute, where she is now working on the early-stage clinical development of an MVA-based vaccine candidate against the Middle East respiratory syndrome."
         },
@@ -107,8 +125,10 @@ const eventData = {
             role: "Associate Scientific Director",
             org: "ICTYODEV",
             email: "b.miguelenachamorro@gmail.com",
+            linkedin: "https://www.linkedin.com/in/beatriz-miguelena-chamorro-phd-dvm-037199163/",
+            image: "/Beatriz Miguelena Chamorro.jpg",
             summary: "Veterinarian and vaccinologist with expertise in mucosal immunology. PhD in collaboration with Boehringer Ingelheim on mucosal vaccines for dogs.",
-            fullBio: "Beatriz Miguelena Chamorro is a veterinarian and vaccinologist with expertise in mucosal immunology, vaccine development, and scientific communication. Currently an Associate Scientific Director at ICTYODEV, she completed her PhD through a CIFRE collaboration between the CIRI (Team GIMAP) and Boehringer Ingelheim, where she developed physiologically relevant models to evaluate oral Bordetella bronchiseptica vaccine candidates for dogs. A graduate of the Erasmus Mundus LIVE Master’s programme, she trained across leading European institutions in immunology, infectiology, and vaccinology, building on her DVM from the University of Zaragoza. Beatriz has extensive teaching experience at Université Jean Monnet Saint-Étienne, where she delivered immunology and vaccine-focused courses across undergraduate and master’s levels, and she has contributed to scientific outreach through podcasts and community engagement. Alongside her research career, she is deeply committed to education, languages, and social service, volunteering across multiple organizations supporting vulnerable communities. Her work reflects a strong dedication to advancing vaccine science while fostering human connection through teaching and public engagement."
+            fullBio: "Beatriz Miguelena Chamorro is a veterinarian and vaccinologist with expertise in mucosal immunology, vaccine development, and scientific communication. Currently an Associate Scientific Director at ICTYODEV, she completed her PhD through a CIFRE collaboration between the CIRI (Team GIMAP) and Boehringer Ingelheim, where she developed physiologically relevant models to evaluate oral Bordetella bronchiseptica vaccine candidates for dogs. A graduate of the Erasmus Mundus LIVE Master's programme, she trained across leading European institutions in immunology, infectiology, and vaccinology, building on her DVM from the University of Zaragoza. Beatriz has extensive teaching experience at Université Jean Monnet Saint-Étienne, where she delivered immunology and vaccine-focused courses across undergraduate and master's levels, and she has contributed to scientific outreach through podcasts and community engagement. Alongside her research career, she is deeply committed to education, languages, and social service, volunteering across multiple organizations supporting vulnerable communities. Her work reflects a strong dedication to advancing vaccine science while fostering human connection through teaching and public engagement."
         }
     ],
     team: [
@@ -222,6 +242,7 @@ const Hero = () => {
 
     return (
         <div id="home" className="relative h-screen min-h-[700px] flex items-center justify-center overflow-hidden bg-brand-900">
+            <ThreeBackground />
             <div className="absolute inset-0 opacity-40">
                 <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-brand-800 rounded-full mix-blend-screen blur-[120px] animate-pulse"></div>
                 <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-accent-600 rounded-full mix-blend-screen blur-[120px] opacity-40 animate-pulse delay-1000"></div>
@@ -489,121 +510,700 @@ const Schedule = () => {
 };
 
 const SpeakerModal = ({ speaker, isOpen, onClose }) => {
+    const [showQuestionForm, setShowQuestionForm] = useState(false);
+    const [currentSpeaker, setCurrentSpeaker] = useState(null);
+    const [state, handleSubmit, reset] = useForm("xqezzoyb");
+
+    // Reset form when modal closes
+    useEffect(() => {
+        if (!isOpen) {
+            setShowQuestionForm(false);
+            reset();
+        }
+    }, [isOpen]);
+
+    // Reset when speaker changes
+    useEffect(() => {
+        if (speaker && speaker.name !== currentSpeaker) {
+            setShowQuestionForm(false);
+            reset();
+            setCurrentSpeaker(speaker.name);
+        }
+    }, [speaker?.name]);
+
+    const handleAskAnother = () => {
+        reset();
+        setShowQuestionForm(true);
+    };
+
+    // Function to highlight keywords in biography
+    const highlightBio = (text) => {
+        if (!text) return text;
+
+        // Comprehensive list of important terms from all biographies
+        const keywords = [
+            // Academic Degrees
+            'PhD', 'DPhil', 'MSc', 'BSc', 'M.D.', 'DVM',
+            // Key Institutions
+            'University of Oxford', 'Oxford Vaccine Group', 'University of Ilorin',
+            'Ludwig Institute for Cancer Research',
+            'Instituto Butantan', 'GenScript', 'IBB-UAB',
+            'University College Dublin', 'University of Galway', 'Boehringer Ingelheim',
+            'University of California, Santa Barbara', 'Usmanu Danfodiyo University',
+            'Sanofi', 'Sanofi Pasteur', 'Translational Medicine Unit',
+            'De La Salle University Medical Center', 'De La Salle Health Sciences Institute',
+            'Institut des Neurosciences Paris-Saclay',
+            'University of Cadiz', 'CNRS', 'Institut Pasteur',
+            'Karolinska Institutet', 'Technical University of Munich',
+            'Bavarian NMR Center', 'Klinikum rechts der Isar', 'University of Antwerp',
+            'University Medical Center Hamburg-Eppendorf', 'IIRVD',
+            'Institute for Infection Research and Vaccine Development',
+            'Maastricht University', 'Institute for Global Health',
+            'ICTYODEV', 'CIRI', 'University of Zaragoza',
+            'Université Jean Monnet Saint-Étienne',
+            // Programs & Initiatives
+            'Erasmus Mundus', 'LIVE', 'EMJM LIVE',
+            'Leading International Vaccinology Education',
+            'Marie Curie Doctoral Fellow', 'Jenner promotion',
+            'CIFRE collaboration',
+            // Important Projects & Research
+            'ChAdOx1 nCoV-19', 'Marburg virus', 'Sudan Ebola',
+            'COVID-19', 'Malaria', 'SARS-CoV-2',
+            'RSV', 'hMPV', 'HBV', 'HIV',
+            'Middle East respiratory syndrome', 'MERS',
+            'Bordetella bronchiseptica',
+            'mRNA technology', 'mRNA Vaccines', 'mRNA Center of Excellence',
+            'RNA Science Automation', 'RNA Drug substance Automation Unit',
+            'MVA-based vaccine',
+            // Key People
+            'Dr. Daniel Wright', 'Professor Teresa Lambe', 'Prof. Addo',
+            // Scientific Terms
+            'vaccinology', 'immunology', 'vaccine development',
+            'cancer genomics', 'precision medicine', 'translational research',
+            'viral-vector vaccine', 'anti-vector immunity',
+            'biomarker', 'immunohistochemistry',
+            'redox biology', 'neural stem cell', 'NOX-regulated redox signaling',
+            'retinal regeneration', 'Xenopus',
+            'cancer biology', 'gene editing', 'epigenetics',
+            'mucosal immunology',
+            // Positions
+            'DPhil student', 'Research Assistant', 'PhD Candidate',
+            'Technical Account Manager', 'Doctoral Fellow', 'Visiting Researcher',
+            'Senior Principal Scientist', 'Senior Medical Pathologist',
+            'Chief Resident', 'Postdoctoral Researcher',
+            'Unit Head', 'Associate Scientific Director',
+            // Geographic locations (important cities/regions)
+            'Barcelona', 'Antwerp', 'Lyon', 'Saint-Étienne',
+            'Santiago de Chile', 'Prague',
+            'Waltham', 'Marcy L\'Étoile', 'Orlando',
+            'Hamburg', 'Paris', 'Brazil', 'Spain', 'South Africa',
+            'Nigeria', 'Philippines', 'France', 'Germany', 'Stockholm'
+        ];
+
+        const parts = [];
+        let lastIndex = 0;
+
+        // Sort keywords by length (longest first) to avoid partial matches
+        const sortedKeywords = keywords.sort((a, b) => b.length - a.length);
+
+        // Create a regex pattern from keywords
+        const pattern = new RegExp(`(${sortedKeywords.map(k => k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})`, 'gi');
+
+        let match;
+        const matches = [];
+
+        // Collect all matches first to avoid overlaps
+        while ((match = pattern.exec(text)) !== null) {
+            matches.push({
+                index: match.index,
+                length: match[0].length,
+                text: match[0]
+            });
+        }
+
+        // Remove overlapping matches (keep longer ones)
+        const filteredMatches = [];
+        for (let i = 0; i < matches.length; i++) {
+            const current = matches[i];
+            let shouldAdd = true;
+
+            for (let j = 0; j < filteredMatches.length; j++) {
+                const existing = filteredMatches[j];
+                const currentEnd = current.index + current.length;
+                const existingEnd = existing.index + existing.length;
+
+                // Check for overlap
+                if (
+                    (current.index >= existing.index && current.index < existingEnd) ||
+                    (currentEnd > existing.index && currentEnd <= existingEnd)
+                ) {
+                    shouldAdd = false;
+                    break;
+                }
+            }
+
+            if (shouldAdd) {
+                filteredMatches.push(current);
+            }
+        }
+
+        // Sort matches by index
+        filteredMatches.sort((a, b) => a.index - b.index);
+
+        // Build the highlighted text
+        filteredMatches.forEach((match, idx) => {
+            // Add text before match
+            if (match.index > lastIndex) {
+                parts.push(
+                    <span key={`text-${lastIndex}`}>
+                        {text.substring(lastIndex, match.index)}
+                    </span>
+                );
+            }
+            // Add highlighted match
+            parts.push(
+                <span
+                    key={`highlight-${match.index}`}
+                    className="font-semibold text-brand-900 bg-gold-100/30 px-0.5 rounded-sm"
+                >
+                    {match.text}
+                </span>
+            );
+            lastIndex = match.index + match.length;
+        });
+
+        // Add remaining text
+        if (lastIndex < text.length) {
+            parts.push(
+                <span key={`text-${lastIndex}`}>
+                    {text.substring(lastIndex)}
+                </span>
+            );
+        }
+
+        return parts.length > 0 ? parts : text;
+    };
+
     if (!speaker) return null;
 
     return (
         <AnimatePresence>
             {isOpen && (
-                <>
-                    {/* Backdrop */}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    onClick={onClose}
+                    className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-xl overflow-y-auto"
+                >
+                    {/* Animated backdrop circles */}
                     <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        onClick={onClose}
-                        className="fixed inset-0 bg-brand-950/60 backdrop-blur-sm z-50 overflow-y-auto"
+                        initial={{ scale: 0, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 0.1 }}
+                        exit={{ scale: 0, opacity: 0 }}
+                        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                        className="absolute w-96 h-96 rounded-full bg-gradient-to-br from-brand-800 to-gold-500 blur-3xl"
+                        style={{ top: '20%', left: '10%' }}
+                    />
+                    <motion.div
+                        initial={{ scale: 0, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 0.1 }}
+                        exit={{ scale: 0, opacity: 0 }}
+                        transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+                        className="absolute w-96 h-96 rounded-full bg-gradient-to-br from-accent-600 to-brand-900 blur-3xl"
+                        style={{ bottom: '10%', right: '20%' }}
+                    />
+
+                    <motion.div
+                        initial={{ scale: 0.5, opacity: 0, rotateX: 45 }}
+                        animate={{ scale: 1, opacity: 1, rotateX: 0 }}
+                        exit={{ scale: 0.5, opacity: 0, rotateX: -45 }}
+                        transition={{
+                            duration: 0.5,
+                            ease: [0.22, 1, 0.36, 1]
+                        }}
+                        onClick={(e) => e.stopPropagation()}
+                        className="relative max-w-6xl w-full bg-white overflow-hidden shadow-2xl max-h-[90vh] overflow-y-auto"
+                        style={{
+                            clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 40px), calc(100% - 40px) 100%, 0 100%)',
+                            transformStyle: 'preserve-3d',
+                            perspective: '1000px'
+                        }}
                     >
-                        {/* Modal Container */}
-                        <div className="min-h-screen px-4 text-center">
-                            {/* This element is to trick the browser into centering the modal contents. */}
-                            <span className="inline-block h-screen align-middle" aria-hidden="true">&#8203;</span>
+                        {/* Close Button */}
+                        <motion.button
+                            initial={{ scale: 0, rotate: -180 }}
+                            animate={{ scale: 1, rotate: 0 }}
+                            transition={{ delay: 0.4, type: 'spring', stiffness: 200 }}
+                            onClick={onClose}
+                            className="absolute top-8 right-8 z-20 p-3 bg-black hover:bg-brand-900 transition-colors"
+                        >
+                            <X size={20} className="text-white" />
+                        </motion.button>
 
+                        <div className="grid md:grid-cols-2">
+                            {/* Left - Avatar/Image */}
                             <motion.div
-                                initial={{ opacity: 0, scale: 0.95, y: 20 }}
-                                animate={{ opacity: 1, scale: 1, y: 0 }}
-                                exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                                onClick={(e) => e.stopPropagation()}
-                                className="inline-block w-full max-w-2xl p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-2xl rounded-2xl border border-brand-100 relative"
+                                initial={{ x: -100, opacity: 0 }}
+                                animate={{ x: 0, opacity: 1 }}
+                                transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                                className="relative overflow-hidden min-h-[600px] bg-gradient-to-br from-brand-900 to-brand-800"
                             >
-                                <button
-                                    onClick={onClose}
-                                    className="absolute top-4 right-4 p-2 rounded-full hover:bg-slate-100 text-slate-400 hover:text-brand-900 transition-colors"
-                                >
-                                    <X size={24} />
-                                </button>
-
-                                <div className="flex flex-col md:flex-row gap-6 mb-8 mt-4">
-                                    {/* Initials Placeholder or Image if we had it */}
-                                    <div className="w-24 h-24 rounded-full bg-gradient-to-br from-brand-800 to-brand-900 flex items-center justify-center text-white shrink-0 shadow-lg ring-4 ring-gold-100">
-                                        <span className="font-serif text-3xl font-bold">{speaker.name.charAt(0)}</span>
-                                    </div>
-
-                                    <div>
-                                        <h3 className="text-3xl font-serif font-bold text-brand-950 mb-2">{speaker.name}</h3>
-                                        <div className="text-accent-600 font-bold uppercase text-sm tracking-wider mb-1">{speaker.role}</div>
-                                        <div className="text-slate-500 font-medium">{speaker.org}</div>
-
-                                        {speaker.email && (
-                                            <a href={`mailto:${speaker.email}`} className="inline-flex items-center gap-2 mt-4 text-brand-800 hover:text-gold-600 font-semibold text-sm transition-colors">
-                                                <Mail size={16} />
-                                                {speaker.email}
-                                            </a>
-                                        )}
-                                    </div>
-                                </div>
-
-                                <div className="prose prose-slate max-w-none border-t border-brand-50 pt-6">
-                                    <p className="whitespace-pre-line leading-relaxed text-slate-700 text-lg">
-                                        {speaker.fullBio}
-                                    </p>
-                                </div>
-
-                                <div className="mt-8 pt-6 border-t border-brand-50 flex justify-end">
-                                    <button
-                                        onClick={onClose}
-                                        className="px-6 py-2 bg-brand-50 text-brand-900 font-bold rounded-lg hover:bg-brand-100 transition-colors"
+                                {/* Speaker Image */}
+                                {speaker.image ? (
+                                    <motion.div
+                                        initial={{ scale: 1.3 }}
+                                        animate={{ scale: 1 }}
+                                        transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                                        className="absolute inset-0"
                                     >
-                                        Close
-                                    </button>
-                                </div>
+                                        <img
+                                            src={speaker.image}
+                                            alt={speaker.name}
+                                            className="w-full h-full object-cover"
+                                        />
+                                    </motion.div>
+                                ) : (
+                                    <motion.div
+                                        initial={{ scale: 1.3 }}
+                                        animate={{ scale: 1 }}
+                                        transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                                        className="absolute inset-0 flex items-center justify-center"
+                                    >
+                                        <div className="w-64 h-64 rounded-full bg-gradient-to-br from-gold-400 to-accent-600 flex items-center justify-center shadow-2xl">
+                                            <span className="font-serif text-9xl font-bold text-white">{speaker.name.charAt(0)}</span>
+                                        </div>
+                                    </motion.div>
+                                )}
+
+                                {/* Corner accents with animation */}
+                                <motion.div
+                                    initial={{ width: 0, height: 0 }}
+                                    animate={{ width: 80, height: 80 }}
+                                    transition={{ duration: 0.5, delay: 0.5, ease: 'easeOut' }}
+                                    className="absolute top-0 left-0 border-t-4 border-l-4 border-white/50 z-10"
+                                />
+                                <motion.div
+                                    initial={{ width: 0, height: 0 }}
+                                    animate={{ width: 80, height: 80 }}
+                                    transition={{ duration: 0.5, delay: 0.6, ease: 'easeOut' }}
+                                    className="absolute bottom-0 right-0 border-b-4 border-r-4 border-white/50 z-10"
+                                />
+
+                                {/* Animated gradient line */}
+                                <motion.div
+                                    initial={{ scaleX: 0 }}
+                                    animate={{ scaleX: 1 }}
+                                    transition={{ duration: 0.6, delay: 0.7, ease: 'easeOut' }}
+                                    className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-gold-400 to-accent-600 origin-left z-10"
+                                />
                             </motion.div>
+
+                            {/* Right - Content */}
+                            <div className="p-12 flex flex-col justify-center bg-white">
+                                <div className="space-y-6">
+                                    <div>
+                                        <motion.div
+                                            initial={{ width: 0, opacity: 0 }}
+                                            animate={{ width: 'auto', opacity: 1 }}
+                                            transition={{ duration: 0.5, delay: 0.4 }}
+                                            className="flex items-center gap-3 mb-4 overflow-hidden"
+                                        >
+                                            <div className="w-12 h-0.5 bg-gradient-to-r from-brand-900 to-transparent" />
+                                            <span className="text-xs font-mono uppercase tracking-widest text-black/40">Speaker</span>
+                                        </motion.div>
+
+                                        <motion.h2
+                                            initial={{ y: 20, opacity: 0 }}
+                                            animate={{ y: 0, opacity: 1 }}
+                                            transition={{ duration: 0.5, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                                            className="text-4xl md:text-5xl font-light text-black mb-2 tracking-tight"
+                                            style={{ fontFamily: 'Georgia, serif' }}
+                                        >
+                                            {speaker.name}
+                                        </motion.h2>
+
+                                        <motion.p
+                                            initial={{ y: 20, opacity: 0 }}
+                                            animate={{ y: 0, opacity: 1 }}
+                                            transition={{ duration: 0.5, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                                            className="text-sm font-mono uppercase tracking-widest text-accent-600 mb-1"
+                                        >
+                                            {speaker.role}
+                                        </motion.p>
+
+                                        <motion.p
+                                            initial={{ y: 20, opacity: 0 }}
+                                            animate={{ y: 0, opacity: 1 }}
+                                            transition={{ duration: 0.5, delay: 0.65, ease: [0.22, 1, 0.36, 1] }}
+                                            className="text-sm text-black/60"
+                                        >
+                                            {speaker.org}
+                                        </motion.p>
+                                    </div>
+
+                                    <motion.div
+                                        initial={{ y: 20, opacity: 0 }}
+                                        animate={{ y: 0, opacity: 1 }}
+                                        transition={{ duration: 0.5, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                                        className="relative"
+                                    >
+                                        <h3 className="text-xs font-mono uppercase tracking-widest text-black/40 mb-4 flex items-center gap-2">
+                                            <div className="w-8 h-px bg-black/20" />
+                                            Biography
+                                        </h3>
+                                        <div
+                                            className="relative max-h-[200px] overflow-y-auto pr-4"
+                                            style={{
+                                                scrollbarWidth: 'thin',
+                                                scrollbarColor: 'rgba(0,0,0,0.2) rgba(0,0,0,0.05)'
+                                            }}
+                                        >
+                                            <p className="text-sm leading-loose text-black/70 text-justify" style={{ textAlignLast: 'left' }}>
+                                                {highlightBio(speaker.fullBio)}
+                                            </p>
+                                        </div>
+                                    </motion.div>
+
+                                    {/* Contact */}
+                                    {(speaker.email || speaker.linkedin) && (
+                                        <motion.div
+                                            initial={{ y: 20, opacity: 0 }}
+                                            animate={{ y: 0, opacity: 1 }}
+                                            transition={{ duration: 0.5, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                                            className="flex gap-3 pt-6 border-t border-black/10"
+                                        >
+                                            {speaker.email && (
+                                                <motion.a
+                                                    initial={{ scale: 0, rotate: -180 }}
+                                                    animate={{ scale: 1, rotate: 0 }}
+                                                    transition={{ delay: 0.9, type: 'spring', stiffness: 200 }}
+                                                    href={`mailto:${speaker.email}`}
+                                                    className="p-3 bg-black hover:bg-brand-900 transition-colors group"
+                                                >
+                                                    <Mail size={18} className="text-white" />
+                                                </motion.a>
+                                            )}
+
+                                            {speaker.linkedin && (
+                                                <motion.a
+                                                    initial={{ scale: 0, rotate: -180 }}
+                                                    animate={{ scale: 1, rotate: 0 }}
+                                                    transition={{ delay: 0.92, type: 'spring', stiffness: 200 }}
+                                                    href={speaker.linkedin}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="p-3 bg-black hover:bg-brand-900 transition-colors group"
+                                                >
+                                                    <Linkedin size={18} className="text-white" />
+                                                </motion.a>
+                                            )}
+
+                                            {/* Ask Question Button */}
+                                            {!showQuestionForm && !state.succeeded && (
+                                                <motion.button
+                                                    initial={{ scale: 0, rotate: -180 }}
+                                                    animate={{ scale: 1, rotate: 0 }}
+                                                    transition={{ delay: 0.95, type: 'spring', stiffness: 200 }}
+                                                    onClick={() => setShowQuestionForm(true)}
+                                                    className="flex-1 p-3 bg-brand-900 hover:bg-brand-800 transition-colors group flex items-center justify-center gap-2 text-white text-sm font-medium uppercase tracking-wider"
+                                                >
+                                                    <MessageCircle size={18} />
+                                                    Ask Question
+                                                </motion.button>
+                                            )}
+                                        </motion.div>
+                                    )}
+
+                                    {/* Question Form */}
+                                    {showQuestionForm && !state.succeeded && (
+                                        <motion.div
+                                            initial={{ opacity: 0, height: 0 }}
+                                            animate={{ opacity: 1, height: 'auto' }}
+                                            exit={{ opacity: 0, height: 0 }}
+                                            className="pt-6 border-t border-black/10"
+                                        >
+                                            <h4 className="text-xs font-mono uppercase tracking-widest text-black/40 mb-4">Ask a Question</h4>
+                                            <form onSubmit={handleSubmit} className="space-y-4">
+                                                <input type="hidden" name="speaker" value={speaker.name} />
+                                                <input type="hidden" name="speaker_email" value={speaker.email} />
+
+                                                <input
+                                                    type="text"
+                                                    name="name"
+                                                    required
+                                                    className="w-full px-4 py-2 bg-black/5 border border-black/10 focus:border-brand-900 focus:bg-white transition-all outline-none text-sm"
+                                                    placeholder="Your Name"
+                                                />
+                                                <ValidationError prefix="Name" field="name" errors={state.errors} />
+
+                                                <input
+                                                    type="email"
+                                                    name="email"
+                                                    className="w-full px-4 py-2 bg-black/5 border border-black/10 focus:border-brand-900 focus:bg-white transition-all outline-none text-sm"
+                                                    placeholder="Your Email (Optional)"
+                                                />
+                                                <ValidationError prefix="Email" field="email" errors={state.errors} />
+
+                                                <textarea
+                                                    name="message"
+                                                    required
+                                                    rows={4}
+                                                    className="w-full px-4 py-2 bg-black/5 border border-black/10 focus:border-brand-900 focus:bg-white transition-all outline-none resize-none text-sm"
+                                                    placeholder="Your Question"
+                                                />
+                                                <ValidationError prefix="Message" field="message" errors={state.errors} />
+
+                                                <div className="flex gap-2">
+                                                    <button
+                                                        type="submit"
+                                                        disabled={state.submitting}
+                                                        className="flex-1 px-4 py-2 bg-black hover:bg-brand-900 text-white text-xs font-medium uppercase tracking-wider transition-colors disabled:opacity-50"
+                                                    >
+                                                        {state.submitting ? 'Sending...' : 'Send'}
+                                                    </button>
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => setShowQuestionForm(false)}
+                                                        className="px-4 py-2 bg-black/10 hover:bg-black/20 text-black text-xs font-medium uppercase tracking-wider transition-colors"
+                                                    >
+                                                        Cancel
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </motion.div>
+                                    )}
+
+                                    {/* Success Message */}
+                                    {state.succeeded && (
+                                        <motion.div
+                                            initial={{ opacity: 0, y: 10 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            className="pt-6 border-t border-black/10"
+                                        >
+                                            <div className="p-4 bg-green-50 border border-green-200">
+                                                <h4 className="text-sm font-bold text-green-900 mb-2">Question Sent Successfully!</h4>
+                                                <p className="text-sm text-green-700 mb-3">Thank you for your question.</p>
+                                                <button
+                                                    onClick={handleAskAnother}
+                                                    className="px-4 py-2 bg-black hover:bg-brand-900 text-white text-xs font-medium uppercase tracking-wider transition-colors"
+                                                >
+                                                    Ask Another
+                                                </button>
+                                            </div>
+                                        </motion.div>
+                                    )}
+                                </div>
+                            </div>
                         </div>
                     </motion.div>
-                </>
+                </motion.div>
             )}
         </AnimatePresence>
     );
 };
 
 const SpeakerCard = ({ speaker, index, onOpen }) => {
+    const [isHovered, setIsHovered] = useState(false);
+    const [isClicked, setIsClicked] = useState(false);
+
+    const handleClick = () => {
+        setIsClicked(true);
+        setTimeout(() => {
+            onOpen(speaker);
+            setTimeout(() => setIsClicked(false), 300);
+        }, 400);
+    };
+
     return (
         <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, scale: 0.9, rotateZ: Math.random() * 4 - 2 }}
+            whileInView={{ opacity: 1, scale: 1, rotateZ: 0 }}
+            transition={{
+                duration: 0.6,
+                delay: index * 0.1,
+                ease: [0.22, 1, 0.36, 1]
+            }}
             viewport={{ once: true }}
-            transition={{ delay: index * 0.1 }}
-            className="group relative bg-white rounded-t-2xl border-b-4 border-b-brand-800 shadow-lg hover:shadow-2xl hover:border-b-gold-400 transition-all duration-500 overflow-hidden flex flex-col h-full"
+            onHoverStart={() => setIsHovered(true)}
+            onHoverEnd={() => setIsHovered(false)}
+            onClick={handleClick}
+            className="relative group cursor-pointer aspect-[3/4]"
         >
-            <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-20 transition-opacity">
-                <Users size={100} />
-            </div>
+            <motion.div
+                className="relative w-full h-full overflow-hidden"
+                animate={{
+                    rotateZ: isHovered && !isClicked ? [-1, 1, -1] : 0,
+                    scale: isClicked ? 1.05 : 1,
+                }}
+                transition={{
+                    duration: isClicked ? 0.3 : 2,
+                    repeat: isHovered && !isClicked ? Infinity : 0,
+                    ease: isClicked ? [0.22, 1, 0.36, 1] : "easeInOut"
+                }}
+            >
+                {/* Ripple effect on click */}
+                <AnimatePresence>
+                    {isClicked && (
+                        <>
+                            <motion.div
+                                initial={{ scale: 0, opacity: 0.6 }}
+                                animate={{ scale: 3, opacity: 0 }}
+                                exit={{ opacity: 0 }}
+                                transition={{ duration: 0.6, ease: "easeOut" }}
+                                className="absolute inset-0 bg-gradient-to-br from-brand-800 to-gold-500 rounded-full"
+                                style={{
+                                    top: '50%',
+                                    left: '50%',
+                                    transform: 'translate(-50%, -50%)',
+                                }}
+                            />
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: [0, 1, 0] }}
+                                transition={{ duration: 0.4, times: [0, 0.5, 1] }}
+                                className="absolute inset-0 bg-white/30 backdrop-blur-sm z-10"
+                            />
+                        </>
+                    )}
+                </AnimatePresence>
 
-            <div className="p-8 relative z-10 flex-grow">
-                <div className="w-16 h-1 bg-gold-400 mb-6 group-hover:w-24 transition-all duration-300"></div>
-                <h3 className="text-2xl font-serif font-bold text-brand-950 mb-2 group-hover:text-brand-800 transition-colors">
-                    {speaker.name}
-                </h3>
-                <div className="flex flex-col gap-1 mb-6">
-                    <span className="text-accent-600 font-bold uppercase text-xs tracking-wider">{speaker.role}</span>
-                    <span className="text-slate-500 text-sm font-medium">{speaker.org}</span>
-                </div>
-                <p className="text-slate-600 leading-relaxed text-sm opacity-90 line-clamp-3">
-                    {speaker.summary}
-                </p>
-            </div>
-
-            <div className="px-8 pb-8 pt-0 relative z-10 mt-auto">
-                <button
-                    onClick={() => onOpen(speaker)}
-                    className="group/btn inline-flex items-center gap-2 text-brand-800 font-bold text-sm uppercase tracking-wider hover:text-gold-600 transition-colors"
+                {/* Main Card */}
+                <motion.div
+                    className="absolute inset-0 overflow-hidden"
+                    animate={{
+                        filter: isClicked ? 'brightness(1.3)' : 'brightness(1)',
+                    }}
+                    transition={{ duration: 0.3 }}
+                    style={{
+                        backgroundImage: 'url(/bg-speaker.png)',
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                    }}
                 >
-                    View Profile
-                    <ArrowRight size={16} className="group-hover/btn:translate-x-1 transition-transform" />
-                </button>
-            </div>
+                    {/* Dark overlay for better text contrast */}
+                    <div className="absolute inset-0 bg-brand-900/60" />
 
-            {/* Decorative hover overlay */}
-            <div className="absolute inset-0 bg-gradient-to-br from-transparent to-brand-50 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-500"></div>
+                    {/* Speaker Image */}
+                    <motion.div
+                        className="absolute inset-0"
+                        animate={{
+                            scale: isHovered ? 1.05 : 1,
+                        }}
+                        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                    >
+                        {speaker.image ? (
+                            <img
+                                src={speaker.image}
+                                alt={speaker.name}
+                                className="w-full h-full object-cover"
+                            />
+                        ) : (
+                            <div className="w-full h-full flex items-center justify-center">
+                                <div className="w-48 h-48 rounded-full bg-gradient-to-br from-gold-400 to-accent-600 flex items-center justify-center shadow-2xl">
+                                    <span className="font-serif text-7xl font-bold text-white">{speaker.name.charAt(0)}</span>
+                                </div>
+                            </div>
+                        )}
+                    </motion.div>
+
+                    {/* Grain Effect */}
+                    <div
+                        className="absolute inset-0 opacity-10"
+                        style={{
+                            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='3.5' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+                            backgroundSize: '200px 200px'
+                        }}
+                    />
+
+                    {/* Plus Icon - Top Right */}
+                    <AnimatePresence>
+                        {isHovered && (
+                            <motion.div
+                                initial={{ opacity: 0, x: 20, y: -20 }}
+                                animate={{ opacity: 1, x: 0, y: 0 }}
+                                exit={{ opacity: 0, x: 20, y: -20 }}
+                                transition={{ duration: 0.3 }}
+                                className="absolute top-4 right-4 z-10"
+                            >
+                                <div className="p-2 bg-white/10 backdrop-blur-md border border-white/30 rounded-full">
+                                    <Users size={20} className="text-white" />
+                                </div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+
+                    {/* Name Overlay - Bottom */}
+                    <motion.div
+                        className="absolute bottom-0 left-0 right-0 p-6"
+                        animate={{
+                            y: isHovered ? -10 : 0,
+                        }}
+                        transition={{ duration: 0.4 }}
+                    >
+                        <div className="relative">
+                            <div className="absolute inset-0 bg-black/60 backdrop-blur-md -m-6 border-t border-white/10" />
+
+                            <div className="relative z-10">
+                                <motion.h3
+                                    className="text-2xl md:text-3xl font-light text-white mb-1 tracking-tight"
+                                    style={{ fontFamily: 'Georgia, serif' }}
+                                    animate={{
+                                        y: isHovered ? -5 : 0,
+                                    }}
+                                    transition={{ duration: 0.4, delay: 0.1 }}
+                                >
+                                    {speaker.name}
+                                </motion.h3>
+                                <motion.p
+                                    className="text-xs text-gold-300 font-mono uppercase tracking-widest mb-1"
+                                    animate={{
+                                        opacity: isHovered ? 1 : 0.7,
+                                    }}
+                                    transition={{ duration: 0.4 }}
+                                >
+                                    {speaker.role}
+                                </motion.p>
+                                <motion.p
+                                    className="text-xs text-white/60"
+                                    animate={{
+                                        opacity: isHovered ? 1 : 0.5,
+                                    }}
+                                >
+                                    {speaker.org}
+                                </motion.p>
+                            </div>
+                        </div>
+                    </motion.div>
+
+                    {/* Corner Accent */}
+                    <motion.div
+                        className="absolute top-0 left-0 w-16 h-16 border-t-2 border-l-2 border-gold-400/50"
+                        animate={{
+                            opacity: isHovered || isClicked ? 1 : 0,
+                            scale: isHovered || isClicked ? 1 : 0.8,
+                        }}
+                        transition={{ duration: 0.3 }}
+                    />
+                </motion.div>
+
+                {/* View indicator */}
+                <AnimatePresence>
+                    {isHovered && (
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0 }}
+                            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none z-20"
+                        >
+                            <div className="w-20 h-20 rounded-full border-2 border-white/50 backdrop-blur-sm flex items-center justify-center">
+                                <span className="text-white text-xs font-mono uppercase tracking-widest">View</span>
+                            </div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            </motion.div>
         </motion.div>
     );
 };
@@ -612,10 +1212,10 @@ const Speakers = () => {
     const [selectedSpeaker, setSelectedSpeaker] = useState(null);
 
     return (
-        <section id="speakers" className="py-24 bg-brand-50 border-t border-brand-100">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section id="speakers" className="py-24 bg-white relative overflow-hidden">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <SectionHeader title="Distinguished Speakers" subtitle="The Experts" centered />
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
                     {eventData.speakers.map((speaker, index) => (
                         <SpeakerCard
                             key={index}
@@ -759,24 +1359,34 @@ const Footer = () => {
                     </div>
                     <div>
                         <h5 className="font-serif text-xl font-bold mb-6 text-brand-100">Venue</h5>
-                        <p className="text-brand-200 flex items-start gap-3">
+                        <div className="text-brand-200 flex items-start gap-3">
                             <div className="p-2 rounded-full bg-brand-800 shrink-0">
                                 <MapPin size={16} />
                             </div>
-                            {eventData.details.location}
-                        </p>
+                            <span>{eventData.details.location}</span>
+                        </div>
                     </div>
                 </div>
 
-                <div className="flex flex-col md:flex-row justify-between items-center text-sm text-brand-300">
-                    <p>© 2026 Life After LIVE. All rights reserved.</p>
-                    <div className="flex items-center gap-3 mt-4 md:mt-0">
-                        <span className="text-xs font-semibold tracking-wider uppercase opacity-70">Co-funded by the European Union</span>
-                        <div className="flex gap-1">
-                            <div className="w-3 h-3 bg-brand-800 rounded-full"></div>
-                            <div className="w-3 h-3 bg-gold-400 rounded-full"></div>
+                <div className="text-center">
+                    <h5 className="font-serif text-lg font-bold mb-6 text-brand-100">Partner Institutions</h5>
+                    <div className="flex flex-wrap justify-center items-center gap-6 md:gap-8 mb-10">
+                        <img src="/acknowledgements/LIVE.png" alt="LIVE Programme" className="h-12 md:h-16 w-auto object-contain opacity-90 hover:opacity-100 transition-opacity bg-white/10 rounded-lg p-2" />
+                        <img src="/acknowledgements/UAB.png" alt="Universitat Autònoma de Barcelona" className="h-12 md:h-16 w-auto object-contain opacity-90 hover:opacity-100 transition-opacity bg-white/10 rounded-lg p-2" />
+                        <img src="/acknowledgements/UCBL.png" alt="Université Claude Bernard Lyon 1" className="h-12 md:h-16 w-auto object-contain opacity-90 hover:opacity-100 transition-opacity bg-white/10 rounded-lg p-2" />
+                        <img src="/acknowledgements/UJMSE.png" alt="Université Jean Monnet Saint-Étienne" className="h-12 md:h-16 w-auto object-contain opacity-90 hover:opacity-100 transition-opacity bg-white/10 rounded-lg p-2" />
+                        <img src="/acknowledgements/UOAntwerp.png" alt="University of Antwerp" className="h-12 md:h-16 w-auto object-contain opacity-90 hover:opacity-100 transition-opacity bg-white/10 rounded-lg p-2" />
+                        <img src="/acknowledgements/UOBarcelona.png" alt="University of Barcelona" className="h-12 md:h-16 w-auto object-contain opacity-90 hover:opacity-100 transition-opacity bg-white/10 rounded-lg p-2" />
+                    </div>
+
+                    <div className="border-t border-brand-700 pt-8 pb-8">
+                        <div className="flex flex-col items-center gap-4">
+                            <img src="/acknowledgements/EU-Union.png" alt="European Union" className="h-16 md:h-20 w-auto object-contain opacity-90 hover:opacity-100 transition-opacity bg-white/10 rounded-lg p-3" />
+                            <p className="text-brand-200 text-sm font-semibold tracking-wide">Co-funded by the European Union</p>
                         </div>
                     </div>
+
+                    <p className="text-sm text-brand-300 border-t border-brand-700 pt-6">© 2026 Life After LIVE. All rights reserved.</p>
                 </div>
             </div>
         </footer>
