@@ -25,10 +25,10 @@ const eventData = {
     schedule: [
         { time: "09:00", title: "Opening Ceremony", speaker: "Pr. Christine Delprat", type: "intro" },
         { time: "09:10", title: "Keynote: Vaccine Design", speaker: "Iyiola Oladunjoye", type: "talk" },
-        { time: "09:40", title: "Industry Perspectives", speaker: "Josselyn Andrea Yaguana Navarrete", type: "talk" },
+        { time: "09:40", title: "Industry Perspectives", speaker: "Josselyn Yaguana Navarrete", type: "talk" },
         { time: "10:10", title: "Coffee Break & Networking", type: "break" },
         { time: "10:30", title: "Translational Science", speaker: "Sodiq Ayobami Hameed", type: "talk" },
-        { time: "11:00", title: "Pathology in Drug Dev", speaker: "Christel Pao", type: "talk" },
+        { time: "11:00", title: "Pathology in Drug Dev", speaker: "Dr. Christel Pao", type: "talk" },
         { time: "11:30", title: "Neural Stem Cells", speaker: "Cinthia Violeta Hernández Puente", type: "talk" },
         { time: "12:00", title: "Open Expert Panel", type: "panel" },
         { time: "12:45", title: "Lunch Break", type: "break" },
@@ -131,13 +131,54 @@ const eventData = {
             fullBio: "Beatriz Miguelena Chamorro is a veterinarian and vaccinologist with expertise in mucosal immunology, vaccine development, and scientific communication. Currently an Associate Scientific Director at ICTYODEV, she completed her PhD through a CIFRE collaboration between the CIRI (Team GIMAP) and Boehringer Ingelheim, where she developed physiologically relevant models to evaluate oral Bordetella bronchiseptica vaccine candidates for dogs. A graduate of the Erasmus Mundus LIVE Master's programme, she trained across leading European institutions in immunology, infectiology, and vaccinology, building on her DVM from the University of Zaragoza. Beatriz has extensive teaching experience at Université Jean Monnet Saint-Étienne, where she delivered immunology and vaccine-focused courses across undergraduate and master's levels, and she has contributed to scientific outreach through podcasts and community engagement. Alongside her research career, she is deeply committed to education, languages, and social service, volunteering across multiple organizations supporting vulnerable communities. Her work reflects a strong dedication to advancing vaccine science while fostering human connection through teaching and public engagement."
         }
     ],
+
     team: [
-        { name: "Aoibh Daly", role: "Project Manager", sub: "Scientist - Ireland" },
-        { name: "Leonardo Gonzalez", role: "Logistic Manager", sub: "Scientist - Mexico" },
-        { name: "Rao Zubair Khaliq", role: "Event Manager", sub: "Scientist - Pakistan" },
-        { name: "Meije Forest", role: "Communication Manager", sub: "Pharmacist - France" },
-        { name: "Krishna Kompalli", role: "Finance Manager", sub: "Data Scientist - India" }
+        { name: "Aoibh Daly", role: "Project Manager", sub: "Scientist - Ireland", image: "/Aoibh Daly.jpg" },
+        { name: "Leonardo Gonzalez", role: "Logistic Manager", sub: "Scientist - Mexico", image: "/Leo.png" },
+        { name: "Rao Zubair Khaliq", role: "Event Manager", sub: "Scientist - Pakistan", image: "/Rao.jpg" },
+        { name: "Meije Forest", role: "Communication Manager", sub: "Pharmacist - France", image: "/Meije.png" },
+        { name: "Krishna Kompalli", role: "Finance Manager", sub: "Data Scientist - India", image: "/KrishnaKompalli.jpg" }
     ]
+};
+
+const SESSION_QUOTES = {
+    "Opening Ceremony": { text: "Science knows no country, because knowledge belongs to humanity, and is the torch which illuminates the world.", author: "Louis Pasteur" },
+    "Keynote: Vaccine Design": { text: "Vaccines are a miracle. They have saved more lives than any other medical invention.", author: "Bill Gates" },
+    "Industry Perspectives": { text: "Applied science is the only science that matters.", author: "Thomas Edison" },
+    "Translational Science": { text: "Translational research is the bridge that connects the island of discovery to the mainland of health.", author: "Elias Zerhouni" },
+    "Pathology in Drug Dev": { text: "Observation is a passive science, experimentation an active science.", author: "Claude Bernard" },
+    "Neural Stem Cells": { text: "The brain is a world consisting of a number of unexplored continents and great stretches of unknown territory.", author: "Santiago Ramón y Cajal" },
+    "mRNA Technology": { text: "We are at the very beginning of understanding what RNA can do.", author: "Katalin Karikó" },
+    "Virus-Host Interactions": { text: "The microbe is nothing. The terrain is everything.", author: "Louis Pasteur" },
+    "MVA-based Vaccines": { text: "Success is not final, failure is not fatal: it is the courage to continue that counts.", author: "Winston Churchill" },
+    "Mucosal Vaccines": { text: "Nature places the remedy near the pain.", author: "Ancient Proverb" },
+    "Open Expert Panel": { text: "Alone we can do so little; together we can do so much.", author: "Helen Keller" },
+    "Coffee Break & Networking": { text: "Great things in business are never done by one person. They're done by a team of people.", author: "Steve Jobs" },
+    "Lunch Break": { text: "Conversation is food for the soul.", author: "Proverb" },
+    "Afternoon Break": { text: "Take rest; a field that has rested gives a bountiful crop.", author: "Ovid" },
+    "Closing Remarks": { text: "The important thing is not to stop questioning.", author: "Albert Einstein" }
+};
+
+const SESSION_CONTENT = {
+    "Opening Ceremony": "Join Pr. Christine Delprat as she inaugurates RIW 2026, setting the stage for a day of groundbreaking scientific discourse. Discover the vision behind this year's assembly and the pivotal role of next-generation vaccinologists in shaping global health.",
+    "Keynote: Vaccine Design": "Dive into the cutting-edge world of viral-vector vaccine design with Iyiola Oladunjoye. This keynote explores the journey from antigen discovery to clinical application, highlighting lessons learned from the ChAdOx1 nCoV-19 and Marburg virus trials.",
+    "Industry Perspectives": "Gain a competitive edge with Josselyn Yaguana Navarrete as she bridges the gap between academic research and biotechnological application. Learn how technical account management drives innovation at major industry players like GenScript.",
+    "Translational Science": "Explore the intersection of immunology, genomics, and bioinformatics with Sodiq Ayobami Hameed. Uncover how precision medicine is revolutionizing our approach to combating cancer and complex infectious diseases.",
+    "Pathology in Drug Dev": "Dr. Christel Pao reveals the critical role of pathological interpretation in drug development. Understand how biomarker analysis and tissue evaluation validate efficacy and guide decision-making in translational medicine.",
+    "Neural Stem Cells": "Venture into the microscopic world of redox biology with Cinthia Violeta Hernández Puente. Discover how NOX-regulated signaling mechanisms are unlocking new potentials in retinal regeneration and neural stem cell maintenance.",
+    "mRNA Technology": "Step into the future of medicine with Sergio Linares Fernandez from Sanofi's mRNA Center of Excellence. Analyze the automation strategies accelerating the development of mRNA therapeutics beyond vaccines.",
+    "Virus-Host Interactions": "Florian Gegenfurtner dissects the complex battleground between viruses and host immunity. Examine the latest research on RSV and hMPV to understand cross-neutralizing antibody responses.",
+    "MVA-based Vaccines": "Investigate the next frontier of MVA-based vaccines with Leonie Mayer. Learn about the early-stage clinical development of candidates against MERS and the broader implications for emerging infectious diseases.",
+    "Mucosal Vaccines": "Beatriz Miguelena Chamorro presents the case for mucosal immunology. Discover how oral vaccine candidates for companion animals are providing relevant models for advancing human mucosal vaccination strategies.",
+    "Open Expert Panel": "A dynamic, unscripted dialogue featuring our distinguished speakers. Engage directly with experts as they debate current trends, career pathways, and the future challenges facing the global health landscape.",
+    "Coffee Break & Networking": "Take a well-deserved pause to connect with fellow researchers. Share insights, forge new collaborations, and recharge with premium refreshments in our dedicated networking lounge.",
+    "Lunch Break": "Enjoy a curated culinary experience while discussing the morning's sessions. This extended break offers the perfect opportunity to deepen professional relationships in a relaxed atmosphere.",
+    "Afternoon Break": "Refresh and recharge before the final session block. Enjoy a selection of snacks and beverages while discussing the afternoon's insights with colleagues.",
+    "Closing Remarks": "Pr. Christine Delprat synthesizes the day's key takeaways, celebrating the shared knowledge and new connections formed. Look forward to the future impact of the research shared today."
+};
+
+const getSessionDescription = (item) => {
+    return SESSION_CONTENT[item.title] || "An in-depth session exploring critical developments in immunology and vaccinology, offering novel insights and actionable knowledge for aspiring professionals.";
 };
 
 // --- Components ---
@@ -399,13 +440,20 @@ const About = () => {
     );
 };
 
-const DNAScheduleItem = ({ item, index, isEven }) => {
+const DNAScheduleItem = ({ item, index, isEven, onClick }) => {
     const isBreak = item.type === 'break';
     const isSpecial = item.type === 'intro' || item.type === 'panel';
     const x = useMotionValue(0);
     const y = useMotionValue(0);
     const rotateX = useTransform(y, [-100, 100], [5, -5]);
     const rotateY = useTransform(x, [-100, 100], [-5, 5]);
+
+    // Find speaker image if speaker exists
+    let speakerImage = null;
+    if (item.speaker) {
+        const foundSpeaker = eventData.speakers.find(s => s.name === item.speaker);
+        if (foundSpeaker) speakerImage = foundSpeaker.image;
+    }
 
     return (
         <motion.div
@@ -428,13 +476,22 @@ const DNAScheduleItem = ({ item, index, isEven }) => {
                         y.set(e.clientY - (rect.top + rect.height / 2));
                     }}
                     onMouseLeave={() => { x.set(0); y.set(0); }}
+                    onClick={() => onClick(item)}
                     className={clsx(
-                        "relative p-4 md:p-6 rounded-2xl border backdrop-blur-sm transition-all duration-300 transform-gpu",
-                        isBreak ? "bg-slate-50/80 border-dashed border-slate-300" : "bg-white/90 border-brand-100 shadow-xl hover:shadow-2xl hover:border-brand-300"
+                        "relative p-4 md:p-6 rounded-2xl border backdrop-blur-sm transition-all duration-300 transform-gpu cursor-pointer",
+                        isBreak ? "bg-slate-50/80 border-dashed border-slate-300 hover:bg-slate-100" : "bg-white/90 border-brand-100 shadow-xl hover:shadow-2xl hover:border-brand-300 hover:scale-[1.02]"
                     )}
                 >
                     <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-white/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20"></div>
                     {isSpecial && <div className="absolute -top-3 -right-3 px-3 py-1 bg-brand-900 text-white text-xs font-bold uppercase tracking-wider rounded-lg shadow-lg z-30">Special</div>}
+
+                    {/* Hover "View" Indicator */}
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-30">
+                        <div className="bg-brand-900/90 text-white px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform">
+                            View Details
+                        </div>
+                    </div>
+
                     <div className="flex items-center justify-between mb-2">
                         <span className={clsx("font-serif font-bold text-base md:text-lg", isBreak ? "text-slate-500 italic" : "text-brand-900")}>{item.time}</span>
                         {!isBreak && <div className="h-px flex-grow mx-4 bg-gradient-to-r from-brand-200 to-transparent"></div>}
@@ -442,7 +499,11 @@ const DNAScheduleItem = ({ item, index, isEven }) => {
                     <h3 className={clsx("text-lg md:text-xl font-bold mb-3", isBreak ? "text-slate-500" : "text-slate-900")}>{item.title}</h3>
                     {item.speaker && (
                         <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-brand-100 to-brand-50 flex items-center justify-center text-brand-900 font-bold text-sm shadow-inner">{item.speaker.charAt(0)}</div>
+                            {speakerImage ? (
+                                <img src={speakerImage} alt={item.speaker} className="w-8 h-8 rounded-full object-cover shadow-sm border border-brand-100" />
+                            ) : (
+                                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-brand-100 to-brand-50 flex items-center justify-center text-brand-900 font-bold text-sm shadow-inner">{item.speaker.charAt(0)}</div>
+                            )}
                             <div>
                                 <p className="text-brand-800 font-medium text-sm leading-tight">{item.speaker}</p>
                                 <p className="text-slate-500 text-xs">Speaker</p>
@@ -478,10 +539,127 @@ const DNAScheduleItem = ({ item, index, isEven }) => {
     );
 };
 
-const Schedule = () => {
+const ScheduleModal = ({ item, isOpen, onClose, onOpenSpeaker }) => {
+    if (!item) return null;
+
+    // Get specific quote for the session
+    const quote = SESSION_QUOTES[item.title] || { text: "Science is a way of thinking much more than it is a body of knowledge.", author: "Carl Sagan" };
+    const description = getSessionDescription(item);
+
+    // Find speaker image if speaker exists
+    let speakerImage = null;
+    let speakerDetails = null;
+    if (item.speaker) {
+        speakerDetails = eventData.speakers.find(s => s.name === item.speaker);
+        if (speakerDetails) speakerImage = speakerDetails.image;
+    }
+
+    return (
+        <AnimatePresence>
+            {isOpen && (
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    onClick={onClose}
+                    className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/60 backdrop-blur-md"
+                >
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                        onClick={(e) => e.stopPropagation()}
+                        className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl overflow-hidden"
+                    >
+                        {/* Gradient Header */}
+                        <div className="relative h-32 bg-gradient-to-br from-brand-900 to-brand-700 overflow-hidden flex items-center justify-center p-6 text-center">
+                            <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+                            {/* Decorative Circles */}
+                            <div className="absolute top-[-50%] left-[-20%] w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+                            <div className="absolute bottom-[-50%] right-[-20%] w-64 h-64 bg-gold-400/20 rounded-full blur-3xl"></div>
+
+                            <h2 className="relative z-10 text-2xl md:text-3xl font-serif font-bold text-white leading-tight">{item.title}</h2>
+                        </div>
+
+                        {/* Content */}
+                        <div className="p-8">
+                            {/* Time and Tag */}
+                            <div className="flex items-center justify-between mb-6">
+                                <div className="flex items-center gap-2 text-brand-600 font-medium bg-brand-50 px-3 py-1 rounded-full text-sm">
+                                    <Clock size={16} />
+                                    {item.time}
+                                </div>
+                                {item.type !== 'talk' && (
+                                    <span className="text-xs font-bold uppercase tracking-wider text-slate-400 bg-slate-100 px-3 py-1 rounded-full">
+                                        {item.type}
+                                    </span>
+                                )}
+                            </div>
+
+                            {/* Quote Section */}
+                            <div className="mb-8 relative">
+                                <div className="absolute -left-4 -top-4 text-6xl font-serif text-gold-200 leading-none select-none">“</div>
+                                <p className="text-lg font-serif italic text-slate-700 relative z-10 leading-relaxed">
+                                    {quote.text}
+                                </p>
+                                <p className="text-right text-xs font-bold text-brand-400 mt-2 uppercase tracking-wide">— {quote.author}</p>
+                            </div>
+
+                            {/* Description */}
+                            <div className="mb-8">
+                                <p className="text-slate-600 leading-relaxed text-sm">
+                                    {description}
+                                </p>
+                            </div>
+
+                            {/* Speaker Section */}
+                            {item.speaker && (
+                                <div
+                                    className={clsx("flex items-center gap-4 p-4 bg-slate-50 rounded-xl border border-slate-100 transition-colors", speakerDetails && "cursor-pointer hover:bg-slate-100 group")}
+                                    onClick={() => {
+                                        if (speakerDetails && onOpenSpeaker) {
+                                            onClose();
+                                            setTimeout(() => onOpenSpeaker(speakerDetails), 300);
+                                        }
+                                    }}
+                                >
+                                    {speakerImage ? (
+                                        <img src={speakerImage} alt={item.speaker} className="w-12 h-12 rounded-full object-cover shadow-sm group-hover:scale-105 transition-transform" />
+                                    ) : (
+                                        <div className="w-12 h-12 rounded-full bg-brand-100 flex items-center justify-center text-brand-900 font-bold text-lg group-hover:scale-105 transition-transform">
+                                            {item.speaker.charAt(0)}
+                                        </div>
+                                    )}
+                                    <div>
+                                        <p className="font-bold text-brand-900 text-sm group-hover:text-brand-700 transition-colors">{item.speaker}</p>
+                                        {speakerDetails && <p className="text-xs text-slate-500">{speakerDetails.role}</p>}
+                                        {speakerDetails && <span className="text-[10px] text-brand-500 font-bold uppercase tracking-wider mt-1 inline-block opacity-0 group-hover:opacity-100 transition-opacity">View Profile &rarr;</span>}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Close Button */}
+                        <button
+                            onClick={onClose}
+                            className="absolute top-4 right-4 p-2 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors z-20"
+                        >
+                            <X size={20} />
+                        </button>
+
+                    </motion.div>
+                </motion.div>
+            )}
+        </AnimatePresence>
+    );
+};
+
+const Schedule = ({ onOpenSpeaker }) => {
     const containerRef = React.useRef(null);
     const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start end", "end start"] });
     const pathLength = useTransform(scrollYProgress, [0.1, 0.9], [0, 1]);
+    const [selectedItem, setSelectedItem] = useState(null);
 
     return (
         <section id="schedule" className="py-24 bg-slate-50 relative overflow-hidden">
@@ -500,11 +678,24 @@ const Schedule = () => {
                     </div>
                     <div className="relative z-10">
                         {eventData.schedule.map((item, index) => (
-                            <DNAScheduleItem key={index} item={item} index={index} isEven={index % 2 === 0} />
+                            <DNAScheduleItem
+                                key={index}
+                                item={item}
+                                index={index}
+                                isEven={index % 2 === 0}
+                                onClick={setSelectedItem}
+                            />
                         ))}
                     </div>
                 </div>
             </div>
+
+            <ScheduleModal
+                item={selectedItem}
+                isOpen={!!selectedItem}
+                onClose={() => setSelectedItem(null)}
+                onOpenSpeaker={onOpenSpeaker}
+            />
         </section>
     );
 };
@@ -771,10 +962,9 @@ const SpeakerModal = ({ speaker, isOpen, onClose }) => {
                                         transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
                                         className="absolute inset-0 flex items-center justify-center"
                                     >
-                                        <div className="w-64 h-64 rounded-full bg-gradient-to-br from-gold-400 to-accent-600 flex items-center justify-center shadow-2xl">
-                                            <span className="font-serif text-9xl font-bold text-white">{speaker.name.charAt(0)}</span>
-                                        </div>
-                                    </motion.div>
+                                        <div className="flex items-center gap-3">
+                                            <img src="/riw-logo.png" alt="RIW 2026 Logo" className="h-12 w-auto" />
+                                        </div>                    </motion.div>
                                 )}
 
                                 {/* Corner accents with animation */}
@@ -1208,8 +1398,7 @@ const SpeakerCard = ({ speaker, index, onOpen }) => {
     );
 };
 
-const Speakers = () => {
-    const [selectedSpeaker, setSelectedSpeaker] = useState(null);
+const Speakers = ({ onOpen }) => {
 
     return (
         <section id="speakers" className="py-24 bg-white relative overflow-hidden">
@@ -1221,41 +1410,145 @@ const Speakers = () => {
                             key={index}
                             speaker={speaker}
                             index={index}
-                            onOpen={setSelectedSpeaker}
+                            onOpen={onOpen}
                         />
                     ))}
                 </div>
             </div>
+        </section>
+    );
+};
 
-            <SpeakerModal
-                speaker={selectedSpeaker}
-                isOpen={!!selectedSpeaker}
-                onClose={() => setSelectedSpeaker(null)}
-            />
+const BelkaidSection = () => {
+    return (
+        <section className="py-24 bg-white relative overflow-hidden">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                    {/* Image Column */}
+                    <motion.div
+                        initial={{ opacity: 0, x: -50 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8 }}
+                        className="relative"
+                    >
+                        <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl border-4 border-white">
+                            <img
+                                src="/Dr. Belkaid.jpg"
+                                alt="Professor Yasmine Belkaid"
+                                className="w-full h-full object-cover"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-brand-900/60 to-transparent"></div>
+                            <div className="absolute bottom-6 left-6 text-white">
+                                <h3 className="font-serif text-2xl font-bold">Pr. Yasmine Belkaid</h3>
+                                <p className="text-brand-100 font-medium">General Director, Institut Pasteur</p>
+                            </div>
+                        </div>
+                        {/* Decorative elements */}
+                        <div className="absolute -z-10 top-10 -left-10 w-full h-full bg-slate-100 rounded-2xl -rotate-3"></div>
+                        <div className="absolute -z-10 -bottom-10 -right-10 w-40 h-40 bg-brand-100 rounded-full blur-3xl"></div>
+                    </motion.div>
+
+                    {/* Text Column */}
+                    <motion.div
+                        initial={{ opacity: 0, x: 50 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8, delay: 0.2 }}
+                    >
+                        <SectionHeader
+                            title="The Belkaid Promotion"
+                            subtitle="Honoring Excellence"
+                            centered={false}
+                        />
+                        <div className="space-y-6 text-slate-600 leading-relaxed text-justify">
+                            <p>
+                                The 9th LIVE promotion (2024–2026) has been proudly named <span className="font-bold text-brand-700">"Belkaid"</span> in honor of Professor Yasmine Belkaid, a distinguished immunologist and a pioneer in microbiome research. This choice celebrates her revolutionary contributions to immunology, which have significantly impacted vaccinology by clarifying the vital role of a healthy microbiota in enhancing vaccine efficacy.
+                            </p>
+                            <p>
+                                Professor Belkaid earned widespread acclaim for her groundbreaking work on how the microbiome regulates the immune system. She is currently the General Director of the <span className="font-semibold">Institut Pasteur</span>, where she champions innovation in vaccine development against pathogens lacking effective treatments, such as Lassa fever, shigellosis, and tuberculosis.
+                            </p>
+                            <p>
+                                Throughout her career, Professor Belkaid has challenged the status quo and served as an inspiring model for future scientists. Her ascent as the second woman to hold the prestigious title of General Director since the Institut Pasteur's founding in 1887 is a powerful testament to the progress achievable through perseverance and dedication.
+                            </p>
+                            <p>
+                                Her commitment to mentorship, inclusivity, and addressing global health challenges deeply resonates with our cohort. Her expertise has earned her numerous accolades, including the Robert Koch Prize (2021) and the Lurie Prize (2019).
+                            </p>
+                            <div className="p-6 bg-slate-50 rounded-xl border-l-4 border-brand-500 italic text-slate-700 shadow-sm relative">
+                                <div className="absolute top-2 left-2 text-4xl text-brand-200 font-serif">"</div>
+                                We, the LIVE 2024–2026 Master Class, aspire to embody her spirit of exploration, resilience, and unwavering commitment to advancing science for the betterment of humanity.
+                            </div>
+                        </div>
+
+                        <div className="mt-8 flex gap-4">
+                            <a
+                                href="https://www.linkedin.com/in/yasmine-belkaid-pasteur/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-2 px-6 py-3 bg-[#0077b5] text-white rounded-full font-medium hover:bg-[#006396] transition-colors shadow-lg shadow-blue-900/20"
+                            >
+                                <Linkedin size={20} />
+                                Connect on LinkedIn
+                            </a>
+                        </div>
+                    </motion.div>
+                </div>
+            </div>
         </section>
     );
 };
 
 const Team = () => {
     return (
-        <section id="team" className="py-20 bg-white">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h2 className="text-3xl font-serif font-bold text-brand-950 mb-12">Organizing Team</h2>
-                <div className="flex flex-wrap justify-center gap-10">
+        <section id="team" className="py-24 bg-slate-50 relative overflow-hidden">
+            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
+            {/* Soft background gradients */}
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-100/40 rounded-full blur-3xl pointer-events-none"></div>
+            <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gold-100/40 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <SectionHeader title="Organizing Team" subtitle="The Visionaries" centered />
+
+                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 mt-16">
                     {eventData.team.map((member, index) => (
-                        <div key={index} className="flex flex-col items-center gap-3 group">
-                            <div className="w-20 h-20 rounded-full bg-brand-50 border-2 border-brand-100 flex items-center justify-center text-brand-800 font-serif font-bold text-xl group-hover:border-gold-400 group-hover:scale-110 transition-all duration-300 shadow-sm relative overflow-hidden">
-                                <div className="absolute inset-0 bg-gold-400 opacity-0 group-hover:opacity-20 transition-opacity"></div>
-                                {member.name.charAt(0)}
+                        <motion.div
+                            key={index}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.5, delay: index * 0.1 }}
+                            className="group relative"
+                        >
+                            <div className="absolute inset-0 bg-gradient-to-br from-brand-100 to-white rounded-2xl opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500"></div>
+                            <div className="relative h-full bg-white/60 backdrop-blur-md rounded-2xl p-6 border border-white/50 shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col items-center text-center">
+                                {/* Avatar */}
+                                <div className="relative mb-6">
+                                    <div className="w-24 h-24 rounded-full bg-gradient-to-br from-brand-50 to-white border-2 border-white shadow-md flex items-center justify-center relative z-10 overflow-hidden group-hover:scale-105 transition-transform duration-300">
+                                        {member.image ? (
+                                            <img src={member.image} alt={member.name} className="w-full h-full object-cover" />
+                                        ) : (
+                                            <span className="font-serif font-bold text-3xl text-brand-900 bg-clip-text bg-gradient-to-br from-brand-900 to-brand-600 group-hover:text-transparent transition-colors">
+                                                {member.name.charAt(0)}
+                                            </span>
+                                        )}
+                                    </div>
+                                    <div className="absolute inset-0 rounded-full border-2 border-brand-200 border-dashed animate-spin-slow opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                </div>
+
+                                {/* Info */}
+                                <h3 className="font-serif font-bold text-lg text-brand-900 mb-2 leading-tight group-hover:text-brand-700 transition-colors">
+                                    {member.name}
+                                </h3>
+                                <div className="w-8 h-0.5 bg-gold-300 mb-3 rounded-full"></div>
+                                <p className="text-xs font-bold uppercase tracking-wider text-brand-500 mb-1">
+                                    {member.role}
+                                </p>
+                                <p className="text-[10px] text-slate-500 font-medium flex items-center justify-center gap-1 opacity-80">
+                                    <MapPin size={10} />
+                                    {member.sub}
+                                </p>
                             </div>
-                            <div className="text-center">
-                                <h4 className="font-bold text-slate-900">{member.name}</h4>
-                                <p className="text-slate-500 text-xs uppercase tracking-wide">{member.role}</p>
-                                {member.sub && (
-                                    <p className="text-brand-800 text-xs font-medium mt-1">{member.sub}</p>
-                                )}
-                            </div>
-                        </div>
+                        </motion.div>
                     ))}
                 </div>
             </div>
@@ -1394,16 +1687,25 @@ const Footer = () => {
 };
 
 export default function App() {
+    const [selectedSpeaker, setSelectedSpeaker] = useState(null);
+
     return (
         <div className="bg-white min-h-screen font-sans selection:bg-brand-200 selection:text-brand-900">
             <Navbar />
             <Hero />
             <About />
-            <Schedule />
-            <Speakers />
+            <BelkaidSection />
+            <Schedule onOpenSpeaker={setSelectedSpeaker} />
+            <Speakers onOpen={setSelectedSpeaker} />
             <Team />
             <Venue />
             <Footer />
+
+            <SpeakerModal
+                speaker={selectedSpeaker}
+                isOpen={!!selectedSpeaker}
+                onClose={() => setSelectedSpeaker(null)}
+            />
         </div>
     );
 }
