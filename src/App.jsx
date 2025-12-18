@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence, useMotionValue } from 'framer-motion';
 import { Calendar, MapPin, Clock, Users, ChevronRight, Mail, Menu, X, ArrowRight, Star, Linkedin } from 'lucide-react';
 import clsx from 'clsx';
+import LocationMap from './components/LocationMap';
 
 // --- Data ---
 const eventData = {
@@ -392,11 +393,12 @@ const DNAScheduleItem = ({ item, index, isEven }) => {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6, delay: index * 0.1 }}
             className={clsx(
-                "relative flex items-center justify-between mb-16 w-full gap-8",
-                isEven ? "flex-row" : "flex-row-reverse"
+                "relative flex items-center w-full gap-8 mb-8 md:mb-16",
+                "md:justify-between",
+                isEven ? "md:flex-row" : "md:flex-row-reverse"
             )}
         >
-            <div className="w-full md:w-[45%] group perspective-1000">
+            <div className="w-full md:w-[45%] pl-12 md:pl-0 group perspective-1000">
                 <motion.div
                     style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
                     onMouseMove={(e) => {
@@ -406,17 +408,17 @@ const DNAScheduleItem = ({ item, index, isEven }) => {
                     }}
                     onMouseLeave={() => { x.set(0); y.set(0); }}
                     className={clsx(
-                        "relative p-6 rounded-2xl border backdrop-blur-sm transition-all duration-300 transform-gpu",
+                        "relative p-4 md:p-6 rounded-2xl border backdrop-blur-sm transition-all duration-300 transform-gpu",
                         isBreak ? "bg-slate-50/80 border-dashed border-slate-300" : "bg-white/90 border-brand-100 shadow-xl hover:shadow-2xl hover:border-brand-300"
                     )}
                 >
                     <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-white/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20"></div>
                     {isSpecial && <div className="absolute -top-3 -right-3 px-3 py-1 bg-brand-900 text-white text-xs font-bold uppercase tracking-wider rounded-lg shadow-lg z-30">Special</div>}
                     <div className="flex items-center justify-between mb-2">
-                        <span className={clsx("font-serif font-bold text-lg", isBreak ? "text-slate-500 italic" : "text-brand-900")}>{item.time}</span>
+                        <span className={clsx("font-serif font-bold text-base md:text-lg", isBreak ? "text-slate-500 italic" : "text-brand-900")}>{item.time}</span>
                         {!isBreak && <div className="h-px flex-grow mx-4 bg-gradient-to-r from-brand-200 to-transparent"></div>}
                     </div>
-                    <h3 className={clsx("text-xl font-bold mb-3", isBreak ? "text-slate-500" : "text-slate-900")}>{item.title}</h3>
+                    <h3 className={clsx("text-lg md:text-xl font-bold mb-3", isBreak ? "text-slate-500" : "text-slate-900")}>{item.title}</h3>
                     {item.speaker && (
                         <div className="flex items-center gap-3">
                             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-brand-100 to-brand-50 flex items-center justify-center text-brand-900 font-bold text-sm shadow-inner">{item.speaker.charAt(0)}</div>
@@ -429,10 +431,13 @@ const DNAScheduleItem = ({ item, index, isEven }) => {
                 </motion.div>
             </div>
 
-            <div className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center justify-center z-10">
+            <div className={clsx(
+                "absolute flex flex-col items-center justify-center z-10",
+                "left-4 md:left-1/2 md:-translate-x-1/2"
+            )}>
                 <motion.div
                     initial={{ scale: 0 }} whileInView={{ scale: 1 }} viewport={{ once: true }}
-                    className={clsx("w-6 h-6 rounded-full border-4 shadow-lg z-10 bg-white", isBreak ? "border-slate-300" : "border-brand-900")}
+                    className={clsx("w-5 h-5 md:w-6 md:h-6 rounded-full border-4 shadow-lg z-10 bg-white", isBreak ? "border-slate-300" : "border-brand-900")}
                 >
                     {!isBreak && <div className="absolute inset-0 rounded-full bg-gold-400 animate-ping opacity-75"></div>}
                 </motion.div>
@@ -462,17 +467,17 @@ const Schedule = () => {
             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
             <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative" ref={containerRef}>
                 <SectionHeader title="Scientific Program" subtitle="The Sequence" centered />
-                <div className="relative mt-20">
+                <div className="relative mt-12 md:mt-20">
                     <div className="absolute left-1/2 -translate-x-[0.5px] top-0 bottom-0 w-20 -ml-10 pointer-events-none hidden md:block">
                         <svg className="w-full h-full overflow-visible" preserveAspectRatio="none">
                             <motion.path d={`M 40 0 V 3000`} fill="none" stroke="#e2e8f0" strokeWidth="2" strokeDasharray="4 4" />
                             <motion.path d={`M 40 0 V 3000`} fill="none" stroke="#4a0404" strokeWidth="2" style={{ pathLength }} />
                         </svg>
                     </div>
-                    <div className="md:hidden absolute left-4 top-0 bottom-0 w-px bg-slate-200">
-                        <motion.div style={{ height: useTransform(scrollYProgress, [0, 1], ["0%", "100%"]) }} className="w-full bg-brand-900 origin-top" />
+                    <div className="md:hidden absolute left-4 top-0 bottom-0 w-0.5 bg-slate-200">
+                        <motion.div style={{ height: useTransform(scrollYProgress, [0.1, 0.9], ["0%", "100%"]) }} className="w-full bg-brand-900 origin-top" />
                     </div>
-                    <div className="space-y-4 md:space-y-0 relative z-10">
+                    <div className="relative z-10">
                         {eventData.schedule.map((item, index) => (
                             <DNAScheduleItem key={index} item={item} index={index} isEven={index % 2 === 0} />
                         ))}
@@ -658,6 +663,77 @@ const Team = () => {
     );
 };
 
+const Venue = () => {
+    return (
+        <section id="location" className="py-24 bg-white relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-1/3 h-full bg-gradient-to-r from-brand-50 to-transparent pointer-events-none"></div>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <SectionHeader title="Event Location" subtitle="The Venue" centered />
+
+                <div className="grid lg:grid-cols-2 gap-12 items-center mt-16">
+                    <div>
+                        <motion.div
+                            initial={{ opacity: 0, x: -30 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            className="bg-brand-900 text-white p-10 rounded-2xl shadow-xl relative overflow-hidden"
+                        >
+                            <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+                            <h3 className="text-3xl font-serif font-bold mb-6 text-gold-400">Rockefeller Campus</h3>
+
+                            <div className="space-y-6 relative z-10">
+                                <div className="flex items-start gap-4">
+                                    <div className="p-3 bg-white/10 rounded-lg shrink-0">
+                                        <MapPin className="text-gold-400 w-6 h-6" />
+                                    </div>
+                                    <div>
+                                        <p className="text-brand-200 text-sm uppercase tracking-wider font-bold mb-1">Address</p>
+                                        <p className="text-lg leading-relaxed">
+                                            Salles des Thèses, Main Building<br />
+                                            8 avenue Rockefeller<br />
+                                            69008, LYON
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div className="flex items-start gap-4">
+                                    <div className="p-3 bg-white/10 rounded-lg shrink-0">
+                                        <Clock className="text-gold-400 w-6 h-6" />
+                                    </div>
+                                    <div>
+                                        <p className="text-brand-200 text-sm uppercase tracking-wider font-bold mb-1">Time</p>
+                                        <p className="text-lg">09:00 - 17:00</p>
+                                    </div>
+                                </div>
+
+                                <div className="pt-6 mt-6 border-t border-white/10">
+                                    <a
+                                        href="https://www.google.com/maps/dir//8+Avenue+Rockefeller,+69008+Lyon,+France"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-flex items-center gap-2 text-gold-400 hover:text-white font-bold transition-colors group"
+                                    >
+                                        Get Directions
+                                        <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                                    </a>
+                                </div>
+                            </div>
+                        </motion.div>
+                    </div>
+
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true }}
+                    >
+                        <LocationMap address="8 avenue Rockefeller, 69008, LYON" />
+                    </motion.div>
+                </div>
+            </div>
+        </section>
+    );
+};
+
 const Footer = () => {
     return (
         <footer className="bg-brand-900 text-white py-16 relative overflow-hidden">
@@ -716,6 +792,7 @@ export default function App() {
             <Schedule />
             <Speakers />
             <Team />
+            <Venue />
             <Footer />
         </div>
     );
