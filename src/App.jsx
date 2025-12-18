@@ -276,13 +276,61 @@ const Navbar = () => {
     );
 };
 
+const Countdown = () => {
+    const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+
+    useEffect(() => {
+        const targetDate = new Date('2026-01-13T09:00:00');
+
+        const interval = setInterval(() => {
+            const now = new Date();
+            const difference = targetDate - now;
+
+            if (difference > 0) {
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+                const minutes = Math.floor((difference / 1000 / 60) % 60);
+                const seconds = Math.floor((difference / 1000) % 60);
+                setTimeLeft({ days, hours, minutes, seconds });
+            }
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, []);
+
+    const TimeUnit = ({ value, label }) => (
+        <div className="flex flex-col items-center mr-4 sm:mr-8 last:mr-0">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white/10 backdrop-blur-md rounded-xl border border-white/20 flex items-center justify-center shadow-lg mb-2">
+                <span className="font-serif text-2xl sm:text-3xl font-bold text-white tabular-nums">
+                    {String(value).padStart(2, '0')}
+                </span>
+            </div>
+            <span className="text-xs font-bold uppercase tracking-wider text-brand-200">{label}</span>
+        </div>
+    );
+
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+            className="flex flex-wrap gap-2 mt-10 mb-10"
+        >
+            <TimeUnit value={timeLeft.days} label="Days" />
+            <TimeUnit value={timeLeft.hours} label="Hours" />
+            <TimeUnit value={timeLeft.minutes} label="Mins" />
+            <TimeUnit value={timeLeft.seconds} label="Secs" />
+        </motion.div>
+    );
+};
+
 const Hero = () => {
     const { scrollY } = useScroll();
     const y1 = useTransform(scrollY, [0, 500], [0, 200]);
     const opacity = useTransform(scrollY, [0, 400], [1, 0]);
 
     return (
-        <div id="home" className="relative h-screen min-h-[700px] flex items-center justify-center overflow-hidden bg-brand-900">
+        <div id="home" className="relative h-screen min-h-[850px] flex items-center overflow-hidden bg-brand-900">
             <ThreeBackground />
             <div className="absolute inset-0 opacity-40">
                 <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-brand-800 rounded-full mix-blend-screen blur-[120px] animate-pulse"></div>
@@ -291,7 +339,7 @@ const Hero = () => {
             </div>
             <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] mix-blend-overlay"></div>
 
-            <motion.div style={{ y: y1, opacity }} className="relative z-10 max-w-5xl mx-auto px-4 text-center">
+            <motion.div style={{ y: y1, opacity }} className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -315,16 +363,18 @@ const Hero = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.4 }}
-                    className="text-lg md:text-2xl text-brand-100 max-w-2xl mx-auto font-light leading-relaxed mb-12"
+                    className="text-lg md:text-2xl text-brand-100 max-w-5xl font-light leading-relaxed mb-8"
                 >
                     {eventData.details.description}
                 </motion.p>
+
+                <Countdown />
 
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.6 }}
-                    className="flex flex-col sm:flex-row items-center justify-center gap-6"
+                    className="flex flex-col sm:flex-row items-center sm:items-start justify-start gap-6"
                 >
                     <div className="flex items-center gap-3 text-white/80 border-r border-white/20 pr-6 mr-2 hidden sm:flex">
                         <Calendar className="w-5 h-5 text-gold-400" />
@@ -340,7 +390,7 @@ const Hero = () => {
                     initial={{ opacity: 0, y: 40 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.8 }}
-                    className="mt-16"
+                    className="mt-12"
                 >
                     <a href="#schedule" className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-brand-950 transition-all duration-200 bg-gold-400 font-serif rounded-full hover:bg-gold-500 hover:scale-105 focus:outline-none ring-offset-2 focus:ring-2 ring-gold-400 shadow-lg shadow-gold-400/50">
                         Explore Schedule
@@ -1627,6 +1677,74 @@ const Venue = () => {
     );
 };
 
+const FAQ = () => {
+    const faqs = [
+        {
+            question: "Is registration free?",
+            answer: "Yes, the Research Instructive Workshop is fully funded and free for all attending Master's students."
+        },
+        {
+            question: "How do I get to the venue?",
+            answer: "The event is held at the Rockefeller Campus, 8 avenue Rockefeller, 69008 Lyon. It is easily accessible via Metro Line D (Grange Blanche) or Tram T2/T5."
+        },
+        {
+            question: "Will the sessions be recorded?",
+            answer: "While we encourage in-person attendance for the best networking experience, select keynotes may be recorded and made available to registered attendees."
+        },
+        {
+            question: "Is there a dress code?",
+            answer: "We recommend business casual attire to make the best impression during networking sessions with industry professionals."
+        }
+    ];
+
+    const [openIndex, setOpenIndex] = useState(null);
+
+    return (
+        <section className="py-24 bg-slate-50 relative overflow-hidden">
+            <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <SectionHeader title="Frequently Asked Questions" subtitle="Good to Know" centered />
+
+                <div className="mt-12 space-y-4">
+                    {faqs.map((faq, index) => (
+                        <motion.div
+                            key={index}
+                            initial={{ opacity: 0, y: 10 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: index * 0.1 }}
+                            className="bg-white rounded-xl shadow-sm border border-brand-100 overflow-hidden"
+                        >
+                            <button
+                                onClick={() => setOpenIndex(openIndex === index ? null : index)}
+                                className="w-full flex items-center justify-between p-6 text-left focus:outline-none"
+                            >
+                                <span className="font-serif font-bold text-brand-900 text-lg">{faq.question}</span>
+                                <span className={clsx("p-2 rounded-full bg-brand-50 text-brand-600 transition-transform duration-300", openIndex === index && "rotate-180")}>
+                                    <ChevronRight size={20} />
+                                </span>
+                            </button>
+                            <AnimatePresence>
+                                {openIndex === index && (
+                                    <motion.div
+                                        initial={{ height: 0, opacity: 0 }}
+                                        animate={{ height: "auto", opacity: 1 }}
+                                        exit={{ height: 0, opacity: 0 }}
+                                        transition={{ duration: 0.3 }}
+                                    >
+                                        <div className="px-6 pb-6 text-slate-600 leading-relaxed border-t border-brand-50 pt-4">
+                                            {faq.answer}
+                                        </div>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </motion.div>
+                    ))}
+                </div>
+            </div>
+        </section>
+    );
+};
+
 const Footer = () => {
     return (
         <footer className="bg-brand-900 text-white py-16 relative overflow-hidden">
@@ -1699,6 +1817,7 @@ export default function App() {
             <Speakers onOpen={setSelectedSpeaker} />
             <Team />
             <Venue />
+            <FAQ />
             <Footer />
 
             <SpeakerModal
