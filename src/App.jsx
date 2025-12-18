@@ -425,10 +425,20 @@ const Hero = () => {
                     transition={{ duration: 0.8, delay: 0.8 }}
                     className="mt-12"
                 >
-                    <a href="#schedule" className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-brand-950 transition-all duration-200 bg-gold-400 font-serif rounded-full hover:bg-gold-500 hover:scale-105 focus:outline-none ring-offset-2 focus:ring-2 ring-gold-400 shadow-lg shadow-gold-400/50">
-                        Explore Schedule
-                        <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                    </a>
+                    <div className="flex flex-col sm:flex-row gap-4">
+                        <a href="#schedule" className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-brand-950 transition-all duration-200 bg-gold-400 font-serif rounded-full hover:bg-gold-500 hover:scale-105 focus:outline-none ring-offset-2 focus:ring-2 ring-gold-400 shadow-lg shadow-gold-400/50">
+                            Explore Schedule
+                            <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                        </a>
+                        <a
+                            href="/Booklet RIW 2025-26 - 8th (1).pdf"
+                            download="RIW_2026_Booklet.pdf"
+                            className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-white transition-all duration-200 bg-white/10 backdrop-blur-md border border-white/20 font-serif rounded-full hover:bg-white/20 hover:scale-105 focus:outline-none ring-offset-2 focus:ring-2 ring-white/30"
+                        >
+                            <Calendar className="mr-2 w-5 h-5 group-hover:scale-110 transition-transform text-gold-400" />
+                            Download Booklet
+                        </a>
+                    </div>
                 </motion.div>
             </motion.div>
 
