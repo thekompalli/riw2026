@@ -137,7 +137,7 @@ const eventData = {
         { name: "Leonardo Gonzalez", role: "Logistic Manager", sub: "Scientist - Mexico", image: "/Leo.png" },
         { name: "Rao Zubair Khaliq", role: "Event Manager", sub: "Scientist - Pakistan", image: "/Rao.jpg" },
         { name: "Meije Forest", role: "Communication Manager", sub: "Pharmacist - France", image: "/Meije.png" },
-        { name: "Krishna Kompalli", role: "Finance Manager", sub: "Data Scientist - India", image: "/KrishnaKompalli.jpg" }
+        { name: "Krishna Kompalli", role: "Finance Manager & Web Dev", sub: "Data Scientist - India", image: "/KrishnaKompalli.jpg" }
     ]
 };
 
@@ -372,7 +372,7 @@ const Hero = () => {
             </div>
             <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] mix-blend-overlay z-0"></div>
 
-            <motion.div style={{ y: y1, opacity }} className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
+            <motion.div style={{ y: y1, opacity }} className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left pt-32 pb-24 md:py-0">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
