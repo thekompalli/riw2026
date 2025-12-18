@@ -281,6 +281,7 @@ const Navbar = () => {
 
 const Countdown = () => {
     const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+    const [isLive, setIsLive] = useState(false);
 
     useEffect(() => {
         const targetDate = new Date('2026-01-13T09:00:00');
@@ -295,6 +296,10 @@ const Countdown = () => {
                 const minutes = Math.floor((difference / 1000 / 60) % 60);
                 const seconds = Math.floor((difference / 1000) % 60);
                 setTimeLeft({ days, hours, minutes, seconds });
+                setIsLive(false);
+            } else {
+                setIsLive(true);
+                clearInterval(interval);
             }
         }, 1000);
 
@@ -311,6 +316,26 @@ const Countdown = () => {
             <span className="text-xs font-bold uppercase tracking-wider text-brand-200">{label}</span>
         </div>
     );
+
+    if (isLive) {
+        return (
+            <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8 }}
+                className="mt-10 mb-10 p-6 bg-gradient-to-r from-brand-900/80 to-brand-800/80 backdrop-blur-md rounded-2xl border border-gold-400/50 shadow-[0_0_30px_rgba(250,204,21,0.2)] inline-flex items-center gap-4 animate-pulse-slow"
+            >
+                <div className="relative">
+                    <div className="w-3 h-3 bg-red-500 rounded-full animate-ping absolute inset-0"></div>
+                    <div className="w-3 h-3 bg-red-500 rounded-full relative z-10"></div>
+                </div>
+                <div>
+                    <h3 className="text-2xl font-serif font-bold text-white leading-none">Event is Live</h3>
+                    <p className="text-gold-300 text-sm font-medium tracking-wide">Join us now on campus</p>
+                </div>
+            </motion.div>
+        );
+    }
 
     return (
         <motion.div
