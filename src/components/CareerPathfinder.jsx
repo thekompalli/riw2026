@@ -259,6 +259,8 @@ const CareerPathfinder = () => {
                     </div>
                 </div>
             </div>
+            {/* Transition Fade to Next Section */}
+            <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-brand-950 via-brand-950/80 to-transparent pointer-events-none z-20"></div>
         </section>
     );
 };

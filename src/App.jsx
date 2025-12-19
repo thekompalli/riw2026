@@ -8,6 +8,7 @@ import ThreeBackground from './components/ThreeBackground';
 import GlobalMap from './components/GlobalMap';
 import CareerPathfinder from './components/CareerPathfinder';
 import DigitalTicket from './components/DigitalTicket';
+import DNASchedule from './components/DNASchedule';
 
 // --- Data ---
 const eventData = {
@@ -40,7 +41,7 @@ const eventData = {
         { time: "15:00", title: "Afternoon Break", type: "break" },
         { time: "15:20", title: "MVA-based Vaccines", speaker: "Leonie Mayer", type: "talk" },
         { time: "15:50", title: "Mucosal Vaccines", speaker: "Beatriz Miguelena Chamorro", type: "talk" },
-        { time: "16:20", title: "Event Wrap Up", speaker: "Dr. Christophe Gilbert", type: "intro" }
+        { time: "16:20", title: "Event Wrap Up", speaker: "Dr. Christophe Gilbert", type: "closing" }
     ],
     speakers: [
         {
@@ -160,7 +161,7 @@ const SESSION_QUOTES = {
     "Mucosal Vaccines": { text: "Nature places the remedy near the pain.", author: "Ancient Proverb" },
     "Open Expert Panel": { text: "Alone we can do so little; together we can do so much.", author: "Helen Keller" },
     "Coffee Break & Networking": { text: "Great things in business are never done by one person. They're done by a team of people.", author: "Steve Jobs" },
-    "Lunch Break": { text: "Conversation is food for the soul.", author: "Proverb" },
+    "Lunch Break": { text: "One cannot think well, love well, sleep well, if one has not dined well.", author: "Virginia Woolf" },
     "Afternoon Break": { text: "Take rest; a field that has rested gives a bountiful crop.", author: "Ovid" },
     "Closing Remarks": { text: "The important thing is not to stop questioning.", author: "Albert Einstein" }
 };
@@ -484,9 +485,26 @@ const SectionHeader = ({ title, subtitle, centered = false }) => (
 
 const About = () => {
     return (
-        <section id="about" className="py-24 bg-brand-50 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-white/50 to-transparent pointer-events-none"></div>
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <section id="about" className="py-32 bg-gradient-to-b from-white via-violet-50/30 to-indigo-50/20 relative overflow-hidden">
+            {/* Lavender Mist Atmosphere */}
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-purple-100/30 via-violet-50/20 to-transparent pointer-events-none"></div>
+
+            {/* Animated Lavender Orbs */}
+            <div className="absolute top-20 left-10 w-[550px] h-[550px] bg-violet-200/20 blur-[130px] rounded-full mix-blend-multiply pointer-events-none animate-pulse"></div>
+            <div className="absolute bottom-10 right-10 w-[500px] h-[500px] bg-indigo-200/18 blur-[120px] rounded-full mix-blend-multiply pointer-events-none"></div>
+            <div className="absolute top-1/2 right-1/4 w-[400px] h-[400px] bg-purple-200/15 blur-[110px] rounded-full mix-blend-multiply pointer-events-none"></div>
+
+            {/* Ethereal Particles */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                <div className="absolute top-32 left-[15%] w-3 h-3 bg-violet-300/30 rounded-full blur-sm animate-float"></div>
+                <div className="absolute top-48 right-[20%] w-4 h-4 bg-indigo-300/35 rounded-full blur-sm animate-float-delayed"></div>
+                <div className="absolute bottom-32 left-[60%] w-3 h-3 bg-purple-300/25 rounded-full blur-sm animate-float"></div>
+            </div>
+
+            {/* Subtle Texture */}
+            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-[0.015] pointer-events-none"></div>
+
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div className="grid lg:grid-cols-2 gap-16 items-center">
                     <div>
                         <SectionHeader title="Bridging Academia & Industry" subtitle="Why Attend" />
@@ -512,23 +530,16 @@ const About = () => {
                         </div>
                     </div>
 
-                    <div className="relative">
-                        <motion.div
+                    <div className="relative flex items-center justify-center">
+                        <motion.img
+                            src="/riw-logo.png"
+                            alt="RIW Logo"
                             initial={{ opacity: 0, scale: 0.8 }}
                             whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
-                            className="aspect-square rounded-full border border-brand-200 p-8 relative"
-                        >
-                            <div className="absolute inset-0 rounded-full border border-dashed border-brand-200 animate-spin-slow"></div>
-                            <div className="w-full h-full rounded-full bg-gradient-to-br from-brand-800 to-brand-900 flex items-center justify-center text-center p-8 shadow-2xl relative overflow-hidden">
-                                <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
-                                <div className="relative z-10">
-                                    <div className="text-gold-400 font-serif text-9xl font-bold opacity-20 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 select-none">26</div>
-                                    <h3 className="text-white font-serif text-3xl md:text-4xl font-bold mb-2">Network</h3>
-                                    <p className="text-gold-100">with the best minds</p>
-                                </div>
-                            </div>
-                        </motion.div>
+                            transition={{ duration: 0.6 }}
+                            className="w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 object-contain drop-shadow-2xl"
+                        />
                     </div>
                 </div>
             </div>
@@ -1497,9 +1508,20 @@ const SpeakerCard = ({ speaker, index, onOpen }) => {
 const Speakers = ({ onOpen }) => {
 
     return (
-        <section id="speakers" className="py-24 bg-white relative overflow-hidden">
+        <section id="speakers" className="py-32 bg-gradient-to-b from-white via-orange-50/30 to-white relative overflow-hidden">
+            {/* Morning Sky Gradient */}
+            <div className="absolute inset-0 bg-gradient-to-b from-sky-100/30 via-orange-50/40 to-amber-50/30 pointer-events-none"></div>
+
+            {/* Animated Morning Orbs */}
+            <div className="absolute top-20 right-0 w-[500px] h-[500px] bg-orange-200/30 blur-[120px] rounded-full mix-blend-multiply pointer-events-none animate-pulse"></div>
+            <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-amber-200/25 blur-[120px] rounded-full mix-blend-multiply pointer-events-none"></div>
+            <div className="absolute top-1/3 right-1/4 w-[400px] h-[400px] bg-rose-200/20 blur-[100px] rounded-full mix-blend-multiply pointer-events-none"></div>
+
+            {/* Subtle Pattern */}
+            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-[0.03] pointer-events-none"></div>
+
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <SectionHeader title="Distinguished Speakers" subtitle="The Experts" centered />
+                <SectionHeader title="Distinguished Speakers from various countries" subtitle="The Experts" centered />
                 <GlobalMap />
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
                     {eventData.speakers.map((speaker, index) => (
@@ -1512,14 +1534,37 @@ const Speakers = ({ onOpen }) => {
                     ))}
                 </div>
             </div>
+
+            {/* Seamless Blend - Bottom Fade */}
+            <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-white via-amber-50/80 to-transparent pointer-events-none z-20"></div>
         </section>
     );
 };
 
 const BelkaidSection = () => {
     return (
-        <section className="py-24 bg-white relative overflow-hidden">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="py-32 bg-gradient-to-b from-pink-50 via-rose-50/50 to-white relative overflow-hidden">
+            {/* Cherry Blossom Atmosphere */}
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-pink-100/40 via-rose-50/30 to-transparent pointer-events-none"></div>
+
+            {/* Animated Blossom Orbs */}
+            <div className="absolute top-10 right-10 w-[600px] h-[600px] bg-pink-200/25 blur-[140px] rounded-full mix-blend-multiply pointer-events-none animate-pulse"></div>
+            <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-rose-200/20 blur-[120px] rounded-full mix-blend-multiply pointer-events-none"></div>
+            <div className="absolute top-1/2 left-1/3 w-[400px] h-[400px] bg-fuchsia-200/15 blur-[100px] rounded-full mix-blend-multiply pointer-events-none"></div>
+
+            {/* Floating Petal Effect */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                <div className="absolute top-20 left-[10%] w-4 h-4 bg-pink-300/40 rounded-full blur-sm animate-float"></div>
+                <div className="absolute top-40 right-[15%] w-3 h-3 bg-rose-300/40 rounded-full blur-sm animate-float-delayed"></div>
+                <div className="absolute top-60 left-[70%] w-5 h-5 bg-fuchsia-300/30 rounded-full blur-sm animate-float"></div>
+                <div className="absolute bottom-40 right-[25%] w-4 h-4 bg-pink-400/35 rounded-full blur-sm animate-float-delayed"></div>
+                <div className="absolute bottom-20 left-[40%] w-3 h-3 bg-rose-400/30 rounded-full blur-sm animate-float"></div>
+            </div>
+
+            {/* Subtle Pattern Overlay */}
+            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-[0.02] pointer-events-none"></div>
+
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                     {/* Image Column */}
                     <motion.div
@@ -1541,9 +1586,10 @@ const BelkaidSection = () => {
                                 <p className="text-brand-100 font-medium">General Director, Institut Pasteur</p>
                             </div>
                         </div>
-                        {/* Decorative elements */}
-                        <div className="absolute -z-10 top-10 -left-10 w-full h-full bg-slate-100 rounded-2xl -rotate-3"></div>
-                        <div className="absolute -z-10 -bottom-10 -right-10 w-40 h-40 bg-brand-100 rounded-full blur-3xl"></div>
+                        {/* Cherry Blossom Decorative Elements */}
+                        <div className="absolute -z-10 top-10 -left-10 w-full h-full bg-gradient-to-br from-pink-100 to-rose-100 rounded-2xl -rotate-3 shadow-xl"></div>
+                        <div className="absolute -z-10 -bottom-10 -right-10 w-40 h-40 bg-pink-300 rounded-full blur-3xl opacity-60"></div>
+                        <div className="absolute -z-10 top-1/2 -right-8 w-32 h-32 bg-rose-300 rounded-full blur-2xl opacity-40"></div>
                     </motion.div>
 
                     {/* Text Column */}
@@ -1571,8 +1617,8 @@ const BelkaidSection = () => {
                             <p>
                                 Her commitment to mentorship, inclusivity, and addressing global health challenges deeply resonates with our cohort. Her expertise has earned her numerous accolades, including the Robert Koch Prize (2021) and the Lurie Prize (2019).
                             </p>
-                            <div className="p-6 bg-slate-50 rounded-xl border-l-4 border-brand-500 italic text-slate-700 shadow-sm relative">
-                                <div className="absolute top-2 left-2 text-4xl text-brand-200 font-serif">"</div>
+                            <div className="p-6 bg-gradient-to-br from-pink-50 to-rose-50/50 rounded-xl border-l-4 border-pink-400 italic text-slate-700 shadow-lg relative backdrop-blur-sm">
+                                <div className="absolute top-2 left-2 text-4xl text-pink-300 font-serif">"</div>
                                 We, the LIVE 2024–2026 Master Class, aspire to embody her spirit of exploration, resilience, and unwavering commitment to advancing science for the betterment of humanity.
                             </div>
                         </div>
@@ -1853,6 +1899,7 @@ const Footer = () => {
 
 export default function App() {
     const [selectedSpeaker, setSelectedSpeaker] = useState(null);
+    const [selectedSession, setSelectedSession] = useState(null);
 
     return (
         <div className="bg-white min-h-screen font-sans selection:bg-brand-200 selection:text-brand-900">
@@ -1861,13 +1908,25 @@ export default function App() {
             <About />
             <BelkaidSection />
             <CareerPathfinder />
-            <Schedule onOpenSpeaker={setSelectedSpeaker} />
+            <DNASchedule
+                schedule={eventData.schedule}
+                speakerMap={SPEAKER_MAP}
+                onOpenSession={setSelectedSession}
+                onOpenSpeaker={setSelectedSpeaker}
+            />
             <Speakers onOpen={setSelectedSpeaker} />
             <Team />
             <Venue />
             <DigitalTicket />
             <FAQ />
             <Footer />
+
+            <ScheduleModal
+                item={selectedSession}
+                isOpen={!!selectedSession}
+                onClose={() => setSelectedSession(null)}
+                onOpenSpeaker={setSelectedSpeaker}
+            />
 
             <SpeakerModal
                 speaker={selectedSpeaker}

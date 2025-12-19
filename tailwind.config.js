@@ -60,11 +60,14 @@ export default {
             animation: {
                 'spin-slow': 'spin 12s linear infinite',
                 'float': 'float 6s ease-in-out infinite',
+                'float-delayed': 'float 7s ease-in-out 2s infinite',
             },
             keyframes: {
                 float: {
-                    '0%, 100%': { transform: 'translateY(0)' },
-                    '50%': { transform: 'translateY(-20px)' },
+                    '0%, 100%': { transform: 'translateY(0) translateX(0)' },
+                    '25%': { transform: 'translateY(-15px) translateX(10px)' },
+                    '50%': { transform: 'translateY(-25px) translateX(-5px)' },
+                    '75%': { transform: 'translateY(-10px) translateX(5px)' },
                 }
             }
         },
