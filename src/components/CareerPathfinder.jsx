@@ -127,7 +127,7 @@ const CareerPathfinder = () => {
                         Find Your Path
                     </motion.h2>
                     <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-                        Not sure which session to attend? Answer a few questions to discover your tailored RIW landscape.
+                        Not sure which session to attend? Answer these two questions to discover your tailored RIW landscape.
                     </p>
                 </div>
 
