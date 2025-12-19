@@ -137,11 +137,11 @@ const eventData = {
     ],
 
     team: [
-        { name: "Aoibh Daly", role: "Project Manager", sub: "Scientist - Ireland", image: "/Aoibh Daly.jpg" },
-        { name: "Leonardo Gonzalez", role: "Logistic Manager", sub: "Scientist - Mexico", image: "/Leo.png" },
-        { name: "Rao Zubair Khaliq", role: "Event Manager", sub: "Scientist - Pakistan", image: "/Rao.jpg" },
-        { name: "Meije Forest", role: "Communication Manager", sub: "Pharmacist - France", image: "/Meije.png" },
-        { name: "Krishna Kompalli", role: "Finance Manager & Web Dev", sub: "Data Scientist - India", image: "/KrishnaKompalli.jpg" }
+        { name: "Aoibh Daly", role: "Project Manager", sub: "Scientist - Ireland", image: "/Aoibh Daly.jpg", linkedin: "https://www.linkedin.com/in/aoibh-daly-631768236/" },
+        { name: "Leonardo Gonzalez", role: "Logistic Manager", sub: "Scientist - Mexico", image: "/Leo.png", linkedin: "https://www.linkedin.com/in/leonardourielgonzalezgarza/" },
+        { name: "Rao Zubair Khaliq", role: "Event Manager", sub: "Scientist - Pakistan", image: "/Rao.jpg", linkedin: "https://www.linkedin.com/in/rao-zubair-khaliq/" },
+        { name: "Meije Forest", role: "Communication Manager", sub: "Pharmacist - France", image: "/Meije.png", linkedin: "https://www.linkedin.com/in/meijeforest/" },
+        { name: "Krishna Kompalli", role: "Finance Manager & Web Dev", sub: "Data Scientist - India", image: "/KrishnaKompalli.jpg", linkedin: "https://www.linkedin.com/in/krishna-kompalli/" }
     ]
 };
 
@@ -1686,10 +1686,20 @@ const Team = () => {
                                 <p className="text-xs font-bold uppercase tracking-wider text-brand-500 mb-1">
                                     {member.role}
                                 </p>
-                                <p className="text-[10px] text-slate-500 font-medium flex items-center justify-center gap-1 opacity-80">
+                                <p className="text-[10px] text-slate-500 font-medium flex items-center justify-center gap-1 opacity-80 mb-3">
                                     <MapPin size={10} />
                                     {member.sub}
                                 </p>
+                                {member.linkedin && (
+                                    <a
+                                        href={member.linkedin}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-brand-600 hover:bg-brand-700 text-white transition-all duration-300 hover:scale-110 shadow-md"
+                                    >
+                                        <Linkedin size={14} />
+                                    </a>
+                                )}
                             </div>
                         </motion.div>
                     ))}
