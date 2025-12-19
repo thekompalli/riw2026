@@ -5,6 +5,9 @@ import clsx from 'clsx';
 import { useForm, ValidationError } from '@formspree/react';
 import LocationMap from './components/LocationMap';
 import ThreeBackground from './components/ThreeBackground';
+import GlobalMap from './components/GlobalMap';
+import CareerPathfinder from './components/CareerPathfinder';
+import DigitalTicket from './components/DigitalTicket';
 
 // --- Data ---
 const eventData = {
@@ -1497,6 +1500,7 @@ const Speakers = ({ onOpen }) => {
         <section id="speakers" className="py-24 bg-white relative overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <SectionHeader title="Distinguished Speakers" subtitle="The Experts" centered />
+                <GlobalMap />
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
                     {eventData.speakers.map((speaker, index) => (
                         <SpeakerCard
@@ -1856,10 +1860,12 @@ export default function App() {
             <Hero />
             <About />
             <BelkaidSection />
+            <CareerPathfinder />
             <Schedule onOpenSpeaker={setSelectedSpeaker} />
             <Speakers onOpen={setSelectedSpeaker} />
             <Team />
             <Venue />
+            <DigitalTicket />
             <FAQ />
             <Footer />
 
