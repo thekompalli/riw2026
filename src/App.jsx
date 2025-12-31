@@ -1862,10 +1862,7 @@ const Venue = () => {
 
 const FAQ = () => {
     const faqs = [
-        {
-            question: "Is registration free?",
-            answer: "Yes, the Research Instructive Workshop is fully funded and free for all attending Master's students."
-        },
+
         {
             question: "How do I get to the venue?",
             answer: "The event is held at the Rockefeller Campus, 8 avenue Rockefeller, 69008 Lyon. It is easily accessible via Metro Line D (Grange Blanche) or Tram T2/T5."
