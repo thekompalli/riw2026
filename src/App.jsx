@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import { useForm, ValidationError } from '@formspree/react';
 import LocationMap from './components/LocationMap';
 import ThreeBackground from './components/ThreeBackground';
-import GlobalMap from './components/GlobalMap';
+
 import CareerPathfinder from './components/CareerPathfinder';
 import DigitalTicket from './components/DigitalTicket';
 import DNASchedule from './components/DNASchedule';
@@ -1522,7 +1522,7 @@ const Speakers = ({ onOpen }) => {
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <SectionHeader title="Distinguished Speakers from various countries" subtitle="The Experts" centered />
-                <GlobalMap />
+
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
                     {eventData.speakers.map((speaker, index) => (
                         <SpeakerCard
@@ -1651,7 +1651,7 @@ const VisionarySection = () => {
             badge: "Coordinator of EMJM LIVE",
             bio: [
                 <span key="1">Prof. Christine Delprat is the <span className="font-bold text-brand-900">founding coordinator</span> of the Erasmus Mundus Joint Master "Leading International Vaccinology Education" (LIVE), a program of excellence funded by the European Commission.</span>,
-                "A graduate of the École Normale Supérieure (ENS Paris) with a double master's in immunology and virology, she has dedicated over 30 years to teaching fundamental and translational immunology. Her extensive career spans research at Schering-Plough (now Merck), UCBL, and the Cancer Research Center of Lyon (CRCL), with expertise ranging from B-cell biology to immuno-oncology.",
+                "Holding a PhD in Human Immunology, she is a graduate of the École Normale Supérieure (ENS Paris) with a double master's in immunology and virology. She has dedicated over 30 years to teaching fundamental and translational immunology. Her extensive career spans research at Schering-Plough (now Merck), UCBL, and the Cancer Research Center of Lyon (CRCL), with expertise ranging from B-cell biology to immuno-oncology.",
                 <span key="2">As a visionary leader, she organizes the <span className="italic">VaxInLive Symposia</span>, fostering a global network of experts, alumni, and students. Prof. Delprat also serves on numerous scientific councils, including for the Institut Pasteur and Inserm, advocating for international cooperation in vaccine research.</span>
             ],
             link: {
