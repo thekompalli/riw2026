@@ -34,7 +34,7 @@ const eventData = {
         { time: "10:30", title: "Translational Science", speaker: "Sodiq Ayobami Hameed", type: "talk" },
         { time: "11:00", title: "Pathology in Drug Dev", speaker: "Dr. Christel Pao", type: "talk" },
         { time: "11:30", title: "Neural Stem Cells", speaker: "Cinthia Violeta Hernández Puente", type: "talk" },
-        { time: "12:00", title: "Open Expert Panel", type: "panel" },
+        { time: "12:00", title: "Open Expert Panel", type: "panel", panelists: ["Florian Gegenfurtner", "Dr. Christel Pao", "Cinthia Violeta Hernández Puente"] },
         { time: "12:45", title: "Lunch Break", type: "break" },
         { time: "14:00", title: "mRNA Technology", speaker: "Sergio Linares Fernandez", type: "talk" },
         { time: "14:30", title: "Virus-Host Interactions", speaker: "Florian Gegenfurtner", type: "talk" },
@@ -742,6 +742,41 @@ const ScheduleModal = ({ item, isOpen, onClose, onOpenSpeaker }) => {
                                         <p className="font-bold text-brand-900 text-sm group-hover:text-brand-700 transition-colors">{item.speaker}</p>
                                         {speakerDetails && <p className="text-xs text-slate-500">{speakerDetails.role}</p>}
                                         {speakerDetails && <span className="text-[10px] text-brand-500 font-bold uppercase tracking-wider mt-1 inline-block opacity-0 group-hover:opacity-100 transition-opacity">View Profile &rarr;</span>}
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Panelists Section */}
+                            {item.panelists && (
+                                <div className="space-y-3 mt-6">
+                                    <h4 className="text-xs font-mono uppercase tracking-widest text-black/40 mb-2 flex items-center gap-2">
+                                        <div className="w-8 h-px bg-black/20" />
+                                        Panelists
+                                    </h4>
+                                    <div className="grid gap-3">
+                                        {item.panelists.map((panelistName, idx) => {
+                                            const panelist = SPEAKER_MAP.get(panelistName);
+                                            if (!panelist) return null;
+                                            return (
+                                                <div
+                                                    key={idx}
+                                                    className="flex items-center gap-4 p-3 bg-slate-50 rounded-xl border border-slate-100 transition-colors cursor-pointer hover:bg-slate-100 group"
+                                                    onClick={() => {
+                                                        if (onOpenSpeaker) {
+                                                            onClose();
+                                                            setTimeout(() => onOpenSpeaker(panelist), 300);
+                                                        }
+                                                    }}
+                                                >
+                                                    <img src={panelist.image || "/riw-logo.png"} alt={panelist.name} className="w-10 h-10 rounded-full object-cover shadow-sm group-hover:scale-105 transition-transform" />
+                                                    <div>
+                                                        <p className="font-bold text-brand-900 text-sm group-hover:text-brand-700 transition-colors">{panelist.name}</p>
+                                                        <p className="text-xs text-slate-500">{panelist.role}</p>
+                                                        <span className="text-[10px] text-brand-500 font-bold uppercase tracking-wider mt-0.5 inline-block opacity-0 group-hover:opacity-100 transition-opacity">View Profile &rarr;</span>
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
                                     </div>
                                 </div>
                             )}
