@@ -362,7 +362,7 @@ const Hero = () => {
     const opacity = useTransform(scrollY, [0, 400], [1, 0]);
 
     return (
-        <div id="home" className="relative h-screen min-h-[850px] flex items-center overflow-hidden bg-brand-900">
+        <div id="home" className="relative h-screen min-h-screen md:min-h-[850px] flex items-start md:items-center overflow-hidden bg-brand-900">
             <ThreeBackground />
             {/* Robust Overlays for Readability */}
             <div className="absolute inset-0 bg-gradient-to-r from-brand-950 via-brand-900/80 to-transparent z-10"></div>
@@ -376,7 +376,7 @@ const Hero = () => {
             </div>
             <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] mix-blend-overlay z-0"></div>
 
-            <motion.div style={{ y: y1, opacity }} className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left pt-32 pb-24 md:py-0">
+            <motion.div style={{ y: y1, opacity }} className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left pt-36 md:pt-0 pb-24 md:py-0">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -391,7 +391,7 @@ const Hero = () => {
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 1, ease: "easeOut" }}
-                    className="font-serif text-6xl md:text-8xl lg:text-9xl font-bold text-white tracking-tighter leading-[0.9] mb-8 drop-shadow-2xl"
+                    className="font-serif text-4xl md:text-8xl lg:text-9xl font-bold text-white tracking-tighter leading-[0.9] mb-8 drop-shadow-2xl"
                 >
                     Life After <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-600 via-gold-400 to-gold-500 drop-shadow-sm">LIVE</span>
                 </motion.h1>
@@ -1642,79 +1642,109 @@ const BelkaidSection = () => {
 };
 
 const VisionarySection = () => {
+    const visionaries = [
+        {
+            name: "Prof. Christine Delprat",
+            image: "/ChrisDelprat_2.jpg",
+            title: "Professor of Immunology",
+            tags: ["PhD", "HDR", "CL.EX."],
+            badge: "Coordinator of EMJM LIVE",
+            bio: [
+                <span key="1">Prof. Christine Delprat is the <span className="font-bold text-brand-900">founding coordinator</span> of the Erasmus Mundus Joint Master "Leading International Vaccinology Education" (LIVE), a program of excellence funded by the European Commission.</span>,
+                "A graduate of the École Normale Supérieure (ENS Paris) with a double master's in immunology and virology, she has dedicated over 30 years to teaching fundamental and translational immunology. Her extensive career spans research at Schering-Plough (now Merck), UCBL, and the Cancer Research Center of Lyon (CRCL), with expertise ranging from B-cell biology to immuno-oncology.",
+                <span key="2">As a visionary leader, she organizes the <span className="italic">VaxInLive Symposia</span>, fostering a global network of experts, alumni, and students. Prof. Delprat also serves on numerous scientific councils, including for the Institut Pasteur and Inserm, advocating for international cooperation in vaccine research.</span>
+            ],
+            link: {
+                url: "https://www.researchgate.net/profile/Christine-Delprat",
+                text: "View Research Profile"
+            }
+        },
+        {
+            name: "Dr. Christophe Gilbert",
+            image: "/Dr.Gilbert.jpeg",
+            title: "Associate Professor",
+            tags: ["PhD Microbiology", "Lyon 1 University", "CIRI"],
+            badge: "Team Legiopath - CIRI",
+            bio: [
+                "Dr. Christophe Gilbert has been associate Professor at Lyon 1 University since 1998, teaching bacterial genetic and host-pathogen interactions. Previously, after completing a PhD in microbiology and spending two years as a temporary lecturer at Lyon 1 University, he worked for three years as a postdoctoral researcher at the University of Cambridge in the United Kingdom.",
+                "During this period, he focused on the use of lactic acid bacteria as live vaccination vectors, particularly against bacterial pathogens. Since 2007, his research has focused primarily on virulence mechanisms in Legionella pneumophila (Team Legiopath at the CIRI (Centre de Recherche International en Infectiologie))."
+            ],
+            link: null
+        }
+    ];
+
     return (
         <section className="py-24 bg-white relative overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <SectionHeader title="The Visionary" subtitle="Our Inspiration" centered />
+                <SectionHeader title="The Visionaries" subtitle="Our Inspiration" centered />
 
-                <div className="grid lg:grid-cols-2 gap-12 items-center mt-16">
-                    <motion.div
-                        initial={{ opacity: 0, x: -50 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8 }}
-                        className="relative"
-                    >
-                        <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl border-4 border-white max-w-md mx-auto lg:max-w-none">
-                            <img
-                                src="/ChrisDelprat_2.jpg"
-                                alt="Prof. Christine Delprat"
-                                className="w-full h-full object-cover"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-brand-900/80 via-transparent to-transparent"></div>
-                            <div className="absolute bottom-8 left-8 text-white">
-                                <h3 className="font-serif text-3xl font-bold mb-1">Prof. Christine Delprat</h3>
-                                <div className="flex flex-wrap gap-2 text-brand-200 text-sm font-medium mb-2">
-                                    <span>PhD</span>
-                                    <span>•</span>
-                                    <span>HDR</span>
-                                    <span>•</span>
-                                    <span>CL.EX.</span>
-                                </div>
-                                <p className="text-white/90">Professor of Immunology</p>
-                            </div>
-                        </div>
-                        {/* Decorative Elements */}
-                        <div className="absolute -z-10 top-10 -left-6 w-full h-full bg-brand-50 rounded-2xl -rotate-3"></div>
-                        <div className="absolute -z-10 -bottom-8 -right-8 w-48 h-48 bg-gold-100 rounded-full blur-3xl opacity-60"></div>
-                    </motion.div>
-
-                    <motion.div
-                        initial={{ opacity: 0, x: 50 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8, delay: 0.2 }}
-                        className="space-y-6 text-slate-600 leading-relaxed text-lg text-justify"
-                    >
-                        <div className="inline-flex items-center gap-2 px-4 py-2 bg-brand-50 rounded-full text-brand-800 font-bold text-sm mb-4">
-                            <Star size={16} className="text-gold-500" />
-                            Coordinator of EMJM LIVE
-                        </div>
-
-                        <p>
-                            Prof. Christine Delprat is the <span className="font-bold text-brand-900">founding coordinator</span> of the Erasmus Mundus Joint Master "Leading International Vaccinology Education" (LIVE), a program of excellence funded by the European Commission.
-                        </p>
-
-                        <p>
-                            A graduate of the École Normale Supérieure (ENS Paris) with a double master's in immunology and virology, she has dedicated over 30 years to teaching fundamental and translational immunology. Her extensive career spans research at Schering-Plough (now Merck), UCBL, and the Cancer Research Center of Lyon (CRCL), with expertise ranging from B-cell biology to immuno-oncology.
-                        </p>
-
-                        <p>
-                            As a visionary leader, she organizes the <span className="italic">VaxInLive Symposia</span>, fostering a global network of experts, alumni, and students. Prof. Delprat also serves on numerous scientific councils, including for the Institut Pasteur and Inserm, advocating for international cooperation in vaccine research.
-                        </p>
-
-                        <div className="pt-6">
-                            <a
-                                href="https://www.researchgate.net/profile/Christine-Delprat"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center gap-3 px-8 py-4 bg-brand-900 text-white rounded-full font-bold hover:bg-brand-800 transition-all hover:scale-105 shadow-lg group"
+                <div className="flex flex-col gap-24 mt-16">
+                    {visionaries.map((visionary, index) => (
+                        <div key={index} className="grid lg:grid-cols-2 gap-12 items-center">
+                            <motion.div
+                                initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.8 }}
+                                className={clsx("relative", index % 2 !== 0 && "lg:order-2")}
                             >
-                                <span>View Research Profile</span>
-                                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                            </a>
+                                <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl border-4 border-white max-w-md mx-auto lg:max-w-none">
+                                    <img
+                                        src={visionary.image}
+                                        alt={visionary.name}
+                                        className="w-full h-full object-cover"
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-brand-900/80 via-transparent to-transparent"></div>
+                                    <div className="absolute bottom-8 left-8 text-white">
+                                        <h3 className="font-serif text-3xl font-bold mb-1">{visionary.name}</h3>
+                                        <div className="flex flex-wrap gap-2 text-brand-200 text-sm font-medium mb-2">
+                                            {visionary.tags.map((tag, i) => (
+                                                <React.Fragment key={i}>
+                                                    <span>{tag}</span>
+                                                    {i < visionary.tags.length - 1 && <span>•</span>}
+                                                </React.Fragment>
+                                            ))}
+                                        </div>
+                                        <p className="text-white/90">{visionary.title}</p>
+                                    </div>
+                                </div>
+                                {/* Decorative Elements */}
+                                <div className={clsx("absolute -z-10 top-10 w-full h-full bg-brand-50 rounded-2xl -rotate-3", index % 2 === 0 ? "-left-6" : "-right-6")}></div>
+                                <div className={clsx("absolute -z-10 -bottom-8 w-48 h-48 bg-gold-100 rounded-full blur-3xl opacity-60", index % 2 === 0 ? "-right-8" : "-left-8")}></div>
+                            </motion.div>
+
+                            <motion.div
+                                initial={{ opacity: 0, x: index % 2 === 0 ? 50 : -50 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.8, delay: 0.2 }}
+                                className={clsx("space-y-6 text-slate-600 leading-relaxed text-lg text-justify", index % 2 !== 0 && "lg:order-1")}
+                            >
+                                <div className="inline-flex items-center gap-2 px-4 py-2 bg-brand-50 rounded-full text-brand-800 font-bold text-sm mb-4">
+                                    <Star size={16} className="text-gold-500" />
+                                    {visionary.badge}
+                                </div>
+
+                                {visionary.bio.map((paragraph, i) => (
+                                    <p key={i}>{paragraph}</p>
+                                ))}
+
+                                {visionary.link && (
+                                    <div className="pt-6">
+                                        <a
+                                            href={visionary.link.url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="inline-flex items-center gap-3 px-8 py-4 bg-brand-900 text-white rounded-full font-bold hover:bg-brand-800 transition-all hover:scale-105 shadow-lg group"
+                                        >
+                                            <span>{visionary.link.text}</span>
+                                            <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                                        </a>
+                                    </div>
+                                )}
+                            </motion.div>
                         </div>
-                    </motion.div>
+                    ))}
                 </div>
             </div>
         </section>
